@@ -3,26 +3,35 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { ArrowRight } from 'react-feather'
 import './App.css'
-
+import { useDispatch, useSelector } from 'react-redux'
 // #343d46,#4f5b66,#65737e,#a7adba,#c0c5ce
 
 function App() {
-  function getTaskSection({ key, task, days }) {
+  function getTaskSection(el, elIndex) {
+    const { key, task, days } = el
     return (
-      <section className="task">
+      <section key={key} className="task">
         <div className="task__days">
-          {days.map((v) => {
+          {days.map((v, index) => {
             if (v == 0) {
-              return <div key={key} className="task__day none"></div>
+              return <div onClick={() => {
+                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
+              }} key={key} className="task__day none"></div>
             }
             else if (v == 1) {
-              return <div key={key} className="task__day empty"></div>
+              return <div onClick={() => {
+                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
+              }} key={key} className="task__day empty"></div>
             }
             else if (v == 2) {
-              return <div key={key} className="task__day fill"></div>
+              return <div onClick={() => {
+                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
+              }} key={key} className="task__day fill"></div>
             }
             else {
-              return <div key={key} className="task__day arrow"><ArrowRight className='icon' size={18} /></div>
+              return <div onClick={() => {
+                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
+              }} key={key} className="task__day arrow"><ArrowRight className='icon' size={18} /></div>
             }
           })}
         </div>
@@ -30,10 +39,10 @@ function App() {
       </section>
     )
   }
-  const tasks = [{ key: 0, task: "Hello world!", column: 1, days: [1, 2, 3, 0, 0, 0, 0] }]
+  const dispatch = useDispatch()
+  const tasks = useSelector(state => state.tasks)
 
   const head = [{ key: 10, value: "Пн" }, { key: 11, value: "Вт" }, { key: 12, value: "Ср" }, { key: 13, value: "Чт" }, { key: 14, value: "Пт" }, { key: 15, value: "Сб" }, { key: 16, value: "Вс" }]
-  const yach = [{ key: 1, value: 0 }, { key: 2, value: 0 }, { key: 3, value: 0 }, { key: 4, value: 0 }, { key: 5, value: 0 }, { key: 6, value: 0 }, { key: 7, value: 0 }]
   return (
     <div className="App">
       <div className="tracker">
@@ -46,8 +55,7 @@ function App() {
           <h1 className="week__header">Список дел</h1>
         </header>
         <div className="tasks">
-          {getTaskSection(tasks[0])}
-          {getTaskSection(tasks[0])}
+          {tasks && tasks.map((task, index) => { return getTaskSection(task, index) })}
         </div>
       </div>
       <div className="list">
@@ -56,7 +64,7 @@ function App() {
           <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 1) {
-                return (<li className="list__point">
+                return (<li key={t.key} className="list__point">
                   <div className="list__point_square"></div>
                   {t.task}</li>)
               }
@@ -66,7 +74,7 @@ function App() {
           <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 2) {
-                return (<li className="list__point">{t.task}</li>)
+                return (<li key={t.key} className="list__point">{t.task}</li>)
               }
             })}
             <li className="list__add">Добавить задачу</li>
@@ -74,7 +82,7 @@ function App() {
           <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 3) {
-                return (<li className="list__point">{t.task}</li>)
+                return (<li key={t.key} className="list__point">{t.task}</li>)
               }
             })}
             <li className="list__add">Добавить задачу</li>
