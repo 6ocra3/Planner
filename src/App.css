@@ -10,6 +10,8 @@
   column-gap: 20px;
 }
 
+
+
 .task__day {
   box-sizing: border-box;
   width: 20px;
@@ -35,7 +37,9 @@
   column-gap: 60px;
 }
 
-.task__text {
+.task__text,
+.list__point,
+.list__add {
   text-align: left;
   font-size: 13px;
   line-height: 20px;
@@ -93,6 +97,27 @@
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 5px;
 }
+
+.list__ul {
+  border-right: solid 0.5px #4f5b66;
+}
+
+.list__ul:last-child {
+  border: none;
+}
+
+.list__add {
+  list-style: none;
+  height: 20px;
+  color: #c0c5ce;
+}
+
+
+
+.list__add:hover {
+  color: #4f5b66;
+}
+
 
 @keyframes logo-spin {
   from {

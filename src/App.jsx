@@ -45,26 +45,29 @@ function App() {
       <div className="list">
         <h1 className="list__header">Сделать за неделю</h1>
         <div className="list__content">
-          <ul>
+          <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 1) {
-                return (<li className="task__text">{t.task}</li>)
+                return (<li className="list__point">{t.task}</li>)
               }
             })}
+            <li className="list__add">Добавить задачу</li>
           </ul>
-          <ul>
+          <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 2) {
-                return (<li className="task__text">{t.task}</li>)
+                return (<li className="list__point">{t.task}</li>)
               }
             })}
+            <li className="list__add">Добавить задачу</li>
           </ul>
-          <ul>
+          <ul className="list__ul">
             {tasks.map(t => {
               if (t.column == 3) {
-                return (<li className="task__text">{t.task}</li>)
+                return (<li className="list__point">{t.task}</li>)
               }
             })}
+            <li className="list__add">Добавить задачу</li>
           </ul>
         </div>
       </div>
