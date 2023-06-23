@@ -13,26 +13,10 @@ function App() {
       <section key={key} className="task">
         <div className="task__days">
           {days.map((v, index) => {
-            if (v == 0) {
-              return <div onClick={() => {
-                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
-              }} key={key} className="task__day none"></div>
-            }
-            else if (v == 1) {
-              return <div onClick={() => {
-                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
-              }} key={key} className="task__day empty"></div>
-            }
-            else if (v == 2) {
-              return <div onClick={() => {
-                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
-              }} key={key} className="task__day fill"></div>
-            }
-            else {
-              return <div onClick={() => {
-                dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
-              }} key={key} className="task__day arrow"><ArrowRight className='icon' size={18} /></div>
-            }
+            const cs = ["none", "empty", "fill", "arrow"]
+            return <div onClick={() => {
+              dispatch({ type: "change_display", payload: { task: elIndex, day: index } })
+            }} key={key} className={"task__day " + cs[v]}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
           })}
         </div>
         <h4 className="task__text">{task}</h4>
