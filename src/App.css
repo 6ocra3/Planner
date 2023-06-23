@@ -16,19 +16,36 @@
   box-sizing: border-box;
   width: 20px;
   height: 20px;
-  border-top: solid 0.5px #4f5b66;
+  /* border-top: solid 0.5px #4f5b66; */
 }
 
-.task:last-child .task__days .task__day {
+/* .task:last-child .task__days .task__day {
   border-bottom: solid 0.5px #4f5b66;
-}
+} */
 
 /* .task__days:last-child .task__day {
   border-bottom: solid 0.5px #4f5b66;
 } */
 
 .task__day:hover {
-  border: solid 1px #343d46 !important;
+  border: solid 1px #343d46;
+}
+
+.empty {
+  border: solid 1px #343d46;
+}
+
+.fill {
+  background-color: #343d46;
+}
+
+.arrow {
+  border: solid 1px #343d46;
+
+}
+
+.icon {
+  margin-top: auto;
 }
 
 .task {
@@ -68,6 +85,10 @@
   text-align: left;
 }
 
+.list__header {
+  margin-bottom: 20px;
+}
+
 .task__days {
   display: flex;
 }
@@ -92,13 +113,13 @@
 }
 
 .list__content {
-  padding-left: 13px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 5px;
 }
 
 .list__ul {
+  list-style: none;
   border-right: solid 0.5px #4f5b66;
 }
 
@@ -112,12 +133,21 @@
   color: #c0c5ce;
 }
 
-
-
 .list__add:hover {
   color: #4f5b66;
 }
 
+.list__point {
+  display: flex;
+}
+
+.list__point_square {
+  margin: auto 4px auto 0;
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: solid 1px #343d46;
+}
 
 @keyframes logo-spin {
   from {
