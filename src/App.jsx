@@ -44,7 +44,29 @@ function App() {
       </div>
       <div className="list">
         <h1 className="list__header">Сделать за неделю</h1>
-
+        <div className="list__content">
+          <ul>
+            {tasks.map(t => {
+              if (t.column == 1) {
+                return (<li className="task__text">{t.task}</li>)
+              }
+            })}
+          </ul>
+          <ul>
+            {tasks.map(t => {
+              if (t.column == 2) {
+                return (<li className="task__text">{t.task}</li>)
+              }
+            })}
+          </ul>
+          <ul>
+            {tasks.map(t => {
+              if (t.column == 3) {
+                return (<li className="task__text">{t.task}</li>)
+              }
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   )
