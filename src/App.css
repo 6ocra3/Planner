@@ -1,0 +1,112 @@
+#root {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.task__day {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border-top: solid 0.5px #4f5b66;
+}
+
+.task:last-child .task__days .task__day {
+  border-bottom: solid 0.5px #4f5b66;
+}
+
+/* .task__days:last-child .task__day {
+  border-bottom: solid 0.5px #4f5b66;
+} */
+
+.task__day:hover {
+  border: solid 1px #343d46 !important;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 60px;
+}
+
+.task__text {
+  text-align: left;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 60px;
+  margin-bottom: 20px;
+}
+
+.week__days {
+  font-size: 13px;
+}
+
+.week__day {
+  margin-top: auto;
+  width: 20px;
+  height: 20px;
+}
+
+.week__header,
+.list__header {
+  font-size: 15px;
+  text-align: left;
+}
+
+.task__days {
+  display: flex;
+}
+
+.week__days {
+  display: flex;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
