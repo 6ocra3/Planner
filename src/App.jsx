@@ -49,7 +49,10 @@ function App() {
         <h1 className="list__header">Сделать за неделю</h1>
         <div className="list__content">
           {tasks && col_ord && col_ord.map((v, index) => {
-            console.log(index)
+            function createTask(e) {
+              dispatch({ type: "add_task", payload: { col: index, task: e.target.value } })
+              setInp(-1)
+            }
             return (
               <ul className='list__ul'>
                 {v.map((el) => {
@@ -65,11 +68,7 @@ function App() {
                       e.target.focus()
                       e.target.select()
                     }}
-                    onBlur={(e) => {
-                      dispatch({ type: "add_task", payload: { col: index, task: e.target.value } })
-                      setInp(-1)
-                    }
-                    } defaultValue={"Новая задача!"}></input>
+                    onBlur={createTask} onKeyUp={(e) => { e.key == "Enter" && createTask(e) }} defaultValue={"Новая задача!"}></input>
                 </li>
                   :
                   <li className="list__add" onClick={(e) => {
