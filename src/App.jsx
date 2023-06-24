@@ -23,6 +23,8 @@ function App() {
       </section>
     )
   }
+
+  const [inp, setInp] = useState(-1)
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.tasks)
   const tr_ord = useSelector(state => state.tr_order)
@@ -49,14 +51,32 @@ function App() {
           {tasks && col_ord && col_ord.map((v, index) => {
             console.log(index)
             return (
-              <ul>
+              <ul className='list__ul'>
                 {v.map((el) => {
                   return (<li key={el} className="list__point">
                     <div key={el} className="list__point_square"></div>
                     {tasks[el].task}</li>)
                 }
                 )}
-                <li className="list__add" onClick={() => dispatch({ type: "add_task", payload: { col: index } })}><Plus className="list__add_icon" color='#4f5b66' size={15}></Plus><p>Добавить задачу</p></li>
+                {inp == index ? <li className="list__point">
+                  <div className="list__point_square"></div>
+                  <input className="list__input" autoFocus={true}
+                    onFocus={(e) => {
+                      e.target.focus()
+                      e.target.select()
+                    }}
+                    onBlur={(e) => {
+                      dispatch({ type: "add_task", payload: { col: index, task: e.target.value } })
+                      setInp(-1)
+                    }
+                    } defaultValue={"Новая задача!"}></input>
+                </li>
+                  :
+                  <li className="list__add" onClick={(e) => {
+                    setInp(index)
+                    // dispatch({ type: "add_task", payload: { col: index } })
+                  }}><Plus className="list__add_icon" color='#4f5b66' size={15}></Plus><p>Добавить задачу</p></li>
+                }
               </ul>)
           })}
         </div>

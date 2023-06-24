@@ -28,10 +28,12 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "add_task":
-      const new_task = { task: "Hello world 3!", days: [0, 0, 0, 1, 1, 0, 0] }
+      const keys = Object.keys(temp_tasks);
+      const maxKey = Math.max(...keys);
+      const new_task = { task: action.payload.task, days: [0, 0, 0, 1, 1, 0, 0] }
       const temp_order = JSON.parse(JSON.stringify(state.col_order))
-      temp_tasks[4] = JSON.parse(JSON.stringify(new_task))
-      temp_order[action.payload.col].push(4)
+      temp_tasks[maxKey + 1] = JSON.parse(JSON.stringify(new_task))
+      temp_order[action.payload.col].push(maxKey + 1)
       return { ...state, col_order: temp_order, tasks: temp_tasks }
     default:
       return state
