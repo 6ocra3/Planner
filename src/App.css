@@ -128,9 +128,15 @@
 }
 
 .list__add {
+  display: flex;
   list-style: none;
   height: 20px;
   color: #c0c5ce;
+  vertical-align: baseline;
+}
+
+.list__add_icon {
+  margin: auto 0 auto 0;
 }
 
 .list__add:hover {
