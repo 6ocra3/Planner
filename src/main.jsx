@@ -6,9 +6,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 const a = [{ name: "a", order: 1 }, { name: "c", order: 4 }, { name: "b", order: 2 }]
+// const defaultState = {
+//   tasks: [{ key: 0, task: "Hello world!", col_order: 1, tr_order: 2, column: 1, days: [1, 2, 3, 0, 0, 0, 0] },
+//   { key: 1, task: "Hello world 2!", col_order: 2, tr_order: 1, column: 1, days: [1, 2, 3, 0, 0, 0, 0] }],
+// }
+
 const defaultState = {
-  tasks: [{ key: 0, task: "Hello world!", col_order: 1, tr_order: 2, column: 1, days: [1, 2, 3, 0, 0, 0, 0] },
-  { key: 1, task: "Hello world 2!", col_order: 2, tr_order: 1, column: 1, days: [1, 2, 3, 0, 0, 0, 0] }],
+  tasks: {
+    0: { task: "Hello world!", col_order: 1, tr_order: 2, column: 1, days: [1, 2, 3, 0, 0, 0, 0] },
+    1: { task: "Hello world 2!", col_order: 2, tr_order: 1, column: 1, days: [1, 2, 3, 0, 0, 0, 0] }
+  },
+  tr_order: [1, 0],
+  col_order: [[0, 1], [], []]
 }
 
 const reducer = (state = defaultState, action) => {
