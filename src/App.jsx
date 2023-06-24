@@ -3,9 +3,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { ArrowRight, Plus } from 'react-feather'
 import './App.css'
+import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
 // #343d46,#4f5b66,#65737e,#a7adba,#c0c5ce
-
 function App() {
   function getTaskSection(el, key) {
     const { task, days } = el
@@ -16,14 +16,13 @@ function App() {
             const cs = ["none", "empty", "fill", "arrow"]
             return <div onClick={() => {
               dispatch({ type: "change_display", payload: { task: key, day: index } })
-            }} key={key} className={"task__day " + cs[v]}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
+            }} key={shortid.generate()} className={"task__day " + cs[v]}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
           })}
         </div>
         <h4 className="task__text">{task}</h4>
       </section>
     )
   }
-
   const [inp, setInp] = useState(-1)
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.tasks)
@@ -32,6 +31,8 @@ function App() {
   const head = [{ key: 10, value: "Пн" }, { key: 11, value: "Вт" }, { key: 12, value: "Ср" }, { key: 13, value: "Чт" }, { key: 14, value: "Пт" }, { key: 15, value: "Сб" }, { key: 16, value: "Вс" }]
   return (
     <div className="App">
+
+
       <div className="tracker">
         <header className="week">
           <div className="week__days">
@@ -42,23 +43,29 @@ function App() {
           <h1 className="week__header">Список дел</h1>
         </header>
         <div className="tasks">
-          {tasks && tr_ord && tr_ord.map((key) => { return getTaskSection(tasks[key], key) })}
+          {tasks && tr_ord && tr_ord.map((key) => {
+            console.log(key)
+            return getTaskSection(tasks[key], key)
+          })}
         </div>
       </div>
+
+
+
       <div className="list">
         <h1 className="list__header">Сделать за неделю</h1>
         <div className="list__content">
           {tasks && col_ord && col_ord.map((v, index) => {
             function createTask(e) {
-              dispatch({ type: "add_task", payload: { col: index, task: e.target.value } })
+              dispatch({ type: "create_task", payload: { col: index, task: e.target.value } })
               setInp(-1)
             }
             return (
-              <ul className='list__ul'>
+              <ul key={shortid.generate()} className='list__ul'>
                 {v.map((el) => {
                   return (<li key={el} className="list__point">
                     <div key={el} className="list__point_square"></div>
-                    {tasks[el].task}</li>)
+                    <p onClick={() => { dispatch({ type: "add_to_tr", payload: { task: el } }) }}>{tasks[el].task}</p></li>)
                 }
                 )}
                 {inp == index ? <li className="list__point">
@@ -80,6 +87,8 @@ function App() {
           })}
         </div>
       </div>
+
+
     </div>
   )
 }
