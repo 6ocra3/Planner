@@ -46,16 +46,17 @@ function App() {
       <div className="list">
         <h1 className="list__header">Сделать за неделю</h1>
         <div className="list__content">
-          {tasks && col_ord && col_ord.map((v) => {
+          {tasks && col_ord && col_ord.map((v, index) => {
+            console.log(index)
             return (
               <ul>
                 {v.map((el) => {
                   return (<li key={el} className="list__point">
-                    <div className="list__point_square"></div>
+                    <div key={el} className="list__point_square"></div>
                     {tasks[el].task}</li>)
                 }
                 )}
-                <li className="list__add"><Plus className="list__add_icon" color='#4f5b66' size={16}></Plus><p>Добавить задачу</p></li>
+                <li className="list__add" onClick={() => dispatch({ type: "add_task", payload: { col: index } })}><Plus className="list__add_icon" color='#4f5b66' size={15}></Plus><p>Добавить задачу</p></li>
               </ul>)
           })}
         </div>

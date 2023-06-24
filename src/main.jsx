@@ -13,19 +13,26 @@ const a = [{ name: "a", order: 1 }, { name: "c", order: 4 }, { name: "b", order:
 
 const defaultState = {
   tasks: {
-    0: { task: "Hello world!", col_order: 1, tr_order: 2, column: 1, days: [1, 2, 3, 0, 0, 0, 0] },
-    1: { task: "Hello world 2!", col_order: 2, tr_order: 1, column: 1, days: [1, 2, 3, 0, 0, 0, 0] }
+    0: { task: "Hello world!", days: [1, 2, 3, 0, 0, 0, 0] },
+    1: { task: "Hello world 2!", days: [1, 2, 3, 0, 0, 0, 0] }
   },
   tr_order: [1, 0],
   col_order: [[0, 1], [], []]
 }
 
 const reducer = (state = defaultState, action) => {
+  const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
+
   switch (action.type) {
     case "change_display":
-      const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
+    case "add_task":
+      const new_task = { task: "Hello world 3!", days: [0, 0, 0, 1, 1, 0, 0] }
+      const temp_order = JSON.parse(JSON.stringify(state.col_order))
+      temp_tasks[4] = JSON.parse(JSON.stringify(new_task))
+      temp_order[action.payload.col].push(4)
+      return { ...state, col_order: temp_order, tasks: temp_tasks }
     default:
       return state
   }
