@@ -71,17 +71,12 @@ function App() {
                 {inp == index ? <li className="list__point">
                   <div className="list__point_square"></div>
                   <input className="list__input" autoFocus={true}
-                    onFocus={(e) => {
-                      e.target.focus()
-                      e.target.select()
-                    }}
-                    onBlur={createTask} onKeyUp={(e) => { e.key == "Enter" && createTask(e) }} defaultValue={"Новая задача!"}></input>
+                    onBlur={createTask} onKeyUp={(e) => { e.key == "Enter" && createTask(e) }}></input>
                 </li>
                   :
                   <li className="list__add" onClick={(e) => {
                     setInp(index)
-                    // dispatch({ type: "add_task", payload: { col: index } })
-                  }}><Plus className="list__add_icon" color='#4f5b66' size={15}></Plus><p>Добавить задачу</p></li>
+                  }}><p>Добавить задачу</p></li>
                 }
               </ul>)
           })}

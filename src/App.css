@@ -153,6 +153,10 @@
   display: flex;
 }
 
+.list__point p {
+  width: 100%;
+}
+
 .list__point_square {
   margin: auto 4px auto 0;
   box-sizing: border-box;
