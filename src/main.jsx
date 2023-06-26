@@ -10,11 +10,12 @@ a.push(0)
 
 const defaultState = {
   tasks: {
-    0: { task: "Hello world!", days: [1, 2, 3, 0, 0, 0, 0] },
-    1: { task: "Hello world 2!", days: [1, 2, 3, 0, 0, 0, 0] }
+    0: { task: "Hello world!", status: 0, days: [1, 2, 3, 0, 0, 0, 0] },
+    1: { task: "Hello world 2!", status: 1, days: [1, 2, 3, 0, 0, 0, 0] },
+    2: { task: "Hello world 3!", status: 2, days: [1, 2, 3, 0, 0, 0, 0] }
   },
   tr_order: JSON.parse(JSON.stringify(a)),
-  col_order: [[0, 1], [], []]
+  col_order: [[0, 1], [2], []]
 }
 
 const reducer = (state = defaultState, action) => {
@@ -23,6 +24,9 @@ const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case "change_display":
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
+      return { ...state, tasks: temp_tasks }
+    case "change_status":
+      temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
       const keys = Object.keys(temp_tasks);

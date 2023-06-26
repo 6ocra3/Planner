@@ -3,14 +3,19 @@ import { Plus } from 'react-feather'
 import './List.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
-
-
+import { Check } from 'react-feather';
+import { FiX } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
 
 function List() {
     const dispatch = useDispatch()
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const col_ord = useSelector(state => state.col_order)
+
+    const icons = [<></>,
+    <FiCheck className="icon" size={15}></FiCheck>,
+    <FiX className="icon" size={15}></FiX>]
 
     function createTask(e, index) {
         dispatch({ type: "create_task", payload: { col: index, task: e.target.value } })
@@ -26,7 +31,7 @@ function List() {
                         <ul key={shortid.generate()} className='list__ul'>
                             {v.map((el) => {
                                 return (<li key={el} className="list__point">
-                                    <div key={el} className="list__point_square"></div>
+                                    <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: el } }) }}>{icons[tasks[el].status]} </div>
                                     <p onClick={() => { dispatch({ type: "add_to_tr", payload: { task: el } }) }}>{tasks[el].task}</p></li>)
                             }
                             )}

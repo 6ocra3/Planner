@@ -1,3 +1,12 @@
+.icon {
+    /* margin: auto 4px auto 4px;
+    box-sizing: border-box;
+    width: 15px;
+    height: 15px;
+    border: solid 1px #343d46; */
+    margin: 0 auto;
+}
+
 .list__point,
 .list__add {
     text-align: left;
@@ -47,7 +56,8 @@
 
 
 
-.list__ul:first-child li .list__add_icon {
+.list__ul:first-child li .list__add_icon,
+.list__ul:first-child li .list__point_square {
     margin-left: 0;
 }
 
@@ -72,7 +82,10 @@
 }
 
 .list__point_square {
-    margin: auto 4px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 4px auto 4px;
     box-sizing: border-box;
     width: 15px;
     height: 15px;
