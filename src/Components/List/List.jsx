@@ -33,7 +33,8 @@ function List() {
                             {inp == index ? <li className="list__point">
                                 <div className="list__point_square"></div>
                                 <input className="list__input" autoFocus={true}
-                                    onBlur={(e) => { createTask(e, index) }} onKeyUp={(e) => { e.key == "Enter" && createTask(e, index) }}></input>
+                                    onBlur={(e) => { e.target.value === "" ? e.target.focus() : createTask(e, index) }}
+                                    onKeyUp={(e) => { e.key == "Enter" && (e.target.value === "" ? e.target.focus() : createTask(e, index)) }}></input>
                             </li>
                                 :
                                 <li className="list__add" onClick={() => {
