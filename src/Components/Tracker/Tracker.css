@@ -1,0 +1,68 @@
+    .task__day {
+        box-sizing: border-box;
+        width: 20px;
+        height: 20px;
+    }
+
+    .task__day:hover {
+        border: solid 1px #343d46;
+    }
+
+    .empty {
+        border: solid 1px #343d46;
+    }
+
+    .fill {
+        background-color: #343d46;
+    }
+
+    .arrow {
+        border: solid 1px #343d46;
+
+    }
+
+    .icon {
+        margin-top: auto;
+    }
+
+    .task {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        column-gap: 60px;
+    }
+
+    .task__text {
+        text-align: left;
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .week {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        column-gap: 60px;
+        margin-bottom: 20px;
+    }
+
+    .week__days {
+        font-size: 13px;
+    }
+
+    .week__day {
+        margin-top: auto;
+        width: 20px;
+        height: 20px;
+    }
+
+    .week__header {
+        font-size: 15px;
+        text-align: left;
+    }
+
+    .task__days {
+        display: flex;
+    }
+
+    .week__days {
+        display: flex;
+    }

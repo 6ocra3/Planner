@@ -4,10 +4,6 @@ import App from './App.jsx'
 import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-// const defaultState = {
-//   tasks: [{ key: 0, task: "Hello world!", col_order: 1, tr_order: 2, column: 1, days: [1, 2, 3, 0, 0, 0, 0] },
-//   { key: 1, task: "Hello world 2!", col_order: 2, tr_order: 1, column: 1, days: [1, 2, 3, 0, 0, 0, 0] }],
-// }
 const a = []
 a.push(1)
 a.push(0)
