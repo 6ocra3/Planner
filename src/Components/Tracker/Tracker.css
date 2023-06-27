@@ -41,22 +41,28 @@
         background-color: #4f5b66;
     }
 
-    .top {
+    /* .top {
         border-bottom: none;
         border-top: solid 1px black;
-        line-height: 19px !important;
+    } */
+
+    .top::before {
+        content: "";
+        width: 250px;
+        border-top: 3px solid #00ff00;
     }
 
     .bot {
         border-top: none;
         border-bottom: solid 1px black;
-        line-height: 19px !important;
     }
 
     .task__text {
+        box-sizing: border-box;
         text-align: left;
         font-size: 13px;
         line-height: 20px;
+        height: 20px;
     }
 
     .week {
