@@ -31,7 +31,7 @@ const reducer = (state = defaultState, action) => {
     case "create_task":
       const keys = Object.keys(temp_tasks);
       const maxKey = Math.max(...keys);
-      const new_task = { task: action.payload.task, days: [0, 0, 0, 0, 0, 0, 0] }
+      const new_task = { task: action.payload.task, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
       temp_tasks[maxKey + 1] = JSON.parse(JSON.stringify(new_task))
       temp_col_order[action.payload.col].push(maxKey + 1)
       return { ...state, col_order: temp_col_order, tasks: temp_tasks }
