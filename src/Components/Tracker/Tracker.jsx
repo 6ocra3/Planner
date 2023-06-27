@@ -9,12 +9,12 @@ function Tracker() {
     const tr_ord = useSelector(state => state.tr_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
-        e.target.classList.add('top')
-        e.target.classList.remove('bot')
+        e.target.parentElement.classList.add('top')
+        e.target.parentElement.classList.remove('bot')
     }
     function Bot(e) {
-        e.target.classList.add('bot')
-        e.target.classList.remove('top')
+        e.target.parentElement.classList.add('bot')
+        e.target.parentElement.classList.remove('top')
     }
     function getTaskSection(el, key) {
         const { task, days } = el
@@ -29,16 +29,21 @@ function Tracker() {
                     })}
                 </div>
                 {/* {console.log(e.clientY - e.target.getBoundingClientRect().y < e.target.getBoundingClientRect().y + 20 - e.clientY ? "Верх" : "Низ")} */}
-                <h4
-                    onMouseLeave={(e) => {
-                        e.target.classList.remove('top')
-                        e.target.classList.remove('bot')
-                    }}
-                    onMouseMove={(e) => (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
-                        ? Top(e)
-                        : Bot(e)}
-                    // onMouseMove={(e) => console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY))}
-                    className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}>{task}</h4>
+                <div>
+                    <div className='top_line'></div>
+                    <h4
+                        onClick={(e) => { console.log(e.target.parentElement) }}
+                        onMouseLeave={(e) => {
+                            e.target.parentElement.classList.remove('top')
+                            e.target.parentElement.classList.remove('bot')
+                        }}
+                        onMouseMove={(e) => (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
+                            ? Top(e)
+                            : Bot(e)}
+                        // onMouseMove={(e) => console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY))}
+                        className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}>{task}</h4>
+                    <div className='bot_line'></div>
+                </div>
             </section>
         )
     }

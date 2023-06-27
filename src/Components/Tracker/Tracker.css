@@ -44,24 +44,35 @@
     /* .top {
         border-bottom: none;
         border-top: solid 1px black;
-    } */
-
-    .top::before {
-        content: "";
-        width: 250px;
-        border-top: 3px solid #00ff00;
     }
 
     .bot {
         border-top: none;
         border-bottom: solid 1px black;
+    } */
+
+    .top_line,
+    .bot_line {
+        display: none;
+        width: 50%;
+        border-top: solid 1px #4f5b66;
+    }
+
+    .top .top_line,
+    .bot .bot_line {
+        display: block;
+    }
+
+    .top .task__text,
+    .bot .task__text {
+        height: 19px;
     }
 
     .task__text {
         box-sizing: border-box;
         text-align: left;
         font-size: 13px;
-        line-height: 20px;
+        line-height: 18px;
         height: 20px;
     }
 
