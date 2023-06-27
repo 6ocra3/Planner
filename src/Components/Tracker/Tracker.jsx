@@ -18,10 +18,10 @@ function Tracker() {
                     {days.map((v, index) => {
                         return <div onClick={() => {
                             dispatch({ type: "change_display", payload: { task: key, day: index } })
-                        }} key={shortid.generate()} className={"task__day " + cs[v]}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
+                        }} key={shortid.generate()} className={"task__day " + cs[v] + (tasks[key].status != 0 ? " task_finished" : "")}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
                     })}
                 </div>
-                <h4 className="task__text">{task}</h4>
+                <h4 className={tasks[key].status != 0 ? "task__text task_finished" : "task__text"}>{task}</h4>
             </section>
         )
     }

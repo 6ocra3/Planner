@@ -31,6 +31,16 @@
         column-gap: 60px;
     }
 
+    .task_finished {
+        text-decoration: line-through;
+        color: #4f5b66;
+        border-color: #4f5b66;
+    }
+
+    .fill.task_finished {
+        background-color: #4f5b66;
+    }
+
     .task__text {
         text-align: left;
         font-size: 13px;
