@@ -61,6 +61,11 @@
     margin-left: 0;
 }
 
+.task_finished {
+    text-decoration: line-through;
+    color: #4f5b66;
+}
+
 .list__add_icon {
     margin: auto 4px auto 4px;
 }
