@@ -4,9 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-const a = []
-a.push(1)
-a.push(0)
+const a = [1, 0]
 
 const defaultState = {
   tasks: {
@@ -36,10 +34,12 @@ const reducer = (state = defaultState, action) => {
       temp_col_order[action.payload.col].push(maxKey + 1)
       return { ...state, col_order: temp_col_order, tasks: temp_tasks }
     case "add_to_tr":
-      if (!(action.payload.task in state.tr_order)) {
+      console.log(!(action.payload.task in state.tr_order))
+      console.log(state.tr_order, action.payload.task)
+      console.log(state.tasks[action.payload.task])
+      if (state.tr_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tr_order]
         a.push(action.payload.task)
-        console.log(a)
         return { ...state, tr_order: a }
       }
       return state
