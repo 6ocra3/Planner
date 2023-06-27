@@ -21,7 +21,16 @@ function Tracker() {
                         }} key={shortid.generate()} className={"task__day " + cs[v] + (tasks[key].status != 0 ? " task_finished" : "")}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
                     })}
                 </div>
-                <h4 className={tasks[key].status != 0 ? "task__text task_finished" : "task__text"}>{task}</h4>
+                {/* {console.log(e.clientY - e.target.getBoundingClientRect().y < e.target.getBoundingClientRect().y + 20 - e.clientY ? "Верх" : "Низ")} */}
+                <h4
+                    onMouseLeave={(e) => {
+                        e.target.classList.remove('top')
+                        e.target.classList.remove('bot')
+                    }}
+                    onMouseMove={(e) => e.clientY - e.target.getBoundingClientRect().y < e.target.getBoundingClientRect().y + 20 - e.clientY
+                        ? (e.target.classList.add('top') && e.target.classList.remove('bot'))
+                        : (e.target.classList.add('bot') && e.target.classList.remove('top'))}
+                    className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}>{task}</h4>
             </section>
         )
     }

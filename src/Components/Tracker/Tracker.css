@@ -41,6 +41,18 @@
         background-color: #4f5b66;
     }
 
+    .top {
+        border-bottom: none;
+        border-top: solid 1px black;
+        line-height: 19px !important;
+    }
+
+    .bot {
+        border-top: none;
+        border-bottom: solid 1px black;
+        line-height: 19px !important;
+    }
+
     .task__text {
         text-align: left;
         font-size: 13px;

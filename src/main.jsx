@@ -8,9 +8,9 @@ const a = [1, 0]
 
 const defaultState = {
   tasks: {
-    0: { task: "Hello world!", status: 0, days: [1, 2, 3, 0, 0, 0, 0] },
-    1: { task: "Hello world 2!", status: 1, days: [1, 2, 3, 0, 0, 0, 0] },
-    2: { task: "Hello world 3!", status: 2, days: [1, 2, 3, 0, 0, 0, 0] }
+    0: { task: "Hello world!", status: 0, days: [0, 0, 0, 0, 0, 0, 0] },
+    1: { task: "Hello world 2!", status: 1, days: [0, 0, 0, 0, 0, 0, 0] },
+    2: { task: "Hello world 3!", status: 2, days: [0, 0, 0, 0, 0, 0, 0] }
   },
   tr_order: JSON.parse(JSON.stringify(a)),
   col_order: [[0, 1], [2], []]
