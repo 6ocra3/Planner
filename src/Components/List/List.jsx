@@ -11,7 +11,7 @@ function List() {
     const dispatch = useDispatch()
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
-    const col_ord = useSelector(state => state.list_order)
+    const list_order = useSelector(state => state.list_order)
 
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
@@ -26,7 +26,7 @@ function List() {
         <div className="list">
             <h1 className="list__header">Сделать за неделю</h1>
             <div className="list__content">
-                {tasks && col_ord && col_ord.map((v, index) => {
+                {tasks && list_order && list_order.map((v, index) => {
                     return (
                         <ul key={shortid.generate()} className='list__ul'>
                             {v.map((el) => {
