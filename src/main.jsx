@@ -12,7 +12,7 @@ var response = await fetch('http://127.0.0.1:5005/get_week/2022-07-03');
 const week = await response.json();
 const defaultState = tasks && week && {
   tasks: tasks,
-  tr_order: week.tracker_order,
+  tracker_order: week.tracker_order,
   list_order: week.list_order
 }
 
@@ -34,13 +34,13 @@ const reducer = (state = defaultState, action) => {
       temp_list_order[action.payload.col].push(maxKey + 1)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "add_to_tr":
-      console.log(!(action.payload.task in state.tr_order))
-      console.log(state.tr_order, action.payload.task)
+      console.log(!(action.payload.task in state.tracker_order))
+      console.log(state.tracker_order, action.payload.task)
       console.log(state.tasks[action.payload.task])
-      if (state.tr_order.indexOf(action.payload.task) == -1) {
-        const a = [...state.tr_order]
+      if (state.tracker_order.indexOf(action.payload.task) == -1) {
+        const a = [...state.tracker_order]
         a.push(action.payload.task)
-        return { ...state, tr_order: a }
+        return { ...state, tracker_order: a }
       }
       return state
     default:

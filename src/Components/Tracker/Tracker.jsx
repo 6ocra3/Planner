@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 function Tracker() {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
-    const tr_ord = useSelector(state => state.tr_order)
+    const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
         e.target.parentElement.classList.add('top')
@@ -59,7 +59,7 @@ function Tracker() {
                 <h1 className="week__header">Список дел</h1>
             </header>
             <div className="tasks">
-                {tasks && tr_ord && tr_ord.map((key) => {
+                {tasks && tracker_order && tracker_order.map((key) => {
                     return getTaskSection(tasks[key], key)
                 })}
             </div>
