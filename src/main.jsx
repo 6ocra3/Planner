@@ -27,6 +27,17 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
+      fetch('http://127.0.0.1:5005/create_task', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          date: "2022-07-03",
+          task: action.payload.task,
+          column: action.payload.col
+        }),
+      })
       const keys = Object.keys(temp_tasks);
       const maxKey = Math.max(...keys);
       const new_task = { task: action.payload.task, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
