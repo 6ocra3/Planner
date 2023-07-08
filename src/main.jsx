@@ -18,7 +18,7 @@ const defaultState = tasks && week && {
 
 const reducer = (state = defaultState, action) => {
   const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
-  const temp_col_order = JSON.parse(JSON.stringify(state.list_order))
+  const temp_list_order = JSON.parse(JSON.stringify(state.list_order))
   switch (action.type) {
     case "change_display":
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
@@ -31,8 +31,8 @@ const reducer = (state = defaultState, action) => {
       const maxKey = Math.max(...keys);
       const new_task = { task: action.payload.task, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
       temp_tasks[maxKey + 1] = JSON.parse(JSON.stringify(new_task))
-      temp_col_order[action.payload.col].push(maxKey + 1)
-      return { ...state, list_order: temp_col_order, tasks: temp_tasks }
+      temp_list_order[action.payload.col].push(maxKey + 1)
+      return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "add_to_tr":
       console.log(!(action.payload.task in state.tr_order))
       console.log(state.tr_order, action.payload.task)

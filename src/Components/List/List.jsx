@@ -11,7 +11,7 @@ function List() {
     const dispatch = useDispatch()
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
-    const col_ord = useSelector(state => state.col_order)
+    const col_ord = useSelector(state => state.list_order)
 
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
