@@ -66,12 +66,19 @@ const reducer = (state = defaultState, action) => {
       temp_list_order[action.payload.col].push(maxKey + 1)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "add_to_tr":
-      console.log(!(action.payload.task in state.tracker_order))
-      console.log(state.tracker_order, action.payload.task)
-      console.log(state.tasks[action.payload.task])
       if (state.tracker_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tracker_order]
         a.push(action.payload.task)
+        fetch('http://127.0.0.1:5005/edit_week', {
+          method: "PUT",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            date: "2022-07-03",
+            tracker_order: a,
+          }),
+        })
         return { ...state, tracker_order: a }
       }
       return state

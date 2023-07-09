@@ -9,12 +9,12 @@ function Tracker() {
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
-        e.target.parentElement.classList.add('top')
-        e.target.parentElement.classList.remove('bot')
+        // e.target.parentElement.classList.add('top')
+        // e.target.parentElement.classList.remove('bot')
     }
     function Bot(e) {
-        e.target.parentElement.classList.add('bot')
-        e.target.parentElement.classList.remove('top')
+        // e.target.parentElement.classList.add('bot')
+        // e.target.parentElement.classList.remove('top')
     }
     function getTaskSection(el, key) {
         const { task, days } = el
@@ -40,7 +40,6 @@ function Tracker() {
                         onMouseMove={(e) => (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
                             ? Top(e)
                             : Bot(e)}
-                        // onMouseMove={(e) => console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY))}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}>{task}</h4>
                     <div className='bot_line'></div>
                 </div>

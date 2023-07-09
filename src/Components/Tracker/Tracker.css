@@ -51,6 +51,12 @@
         border-bottom: solid 1px black;
     } */
 
+    .task__text:hover {
+        font-size: 15px;
+        margin-left: 2px;
+        transition: all 0.15s ease-in;
+    }
+
     .top_line,
     .bot_line {
         display: none;
