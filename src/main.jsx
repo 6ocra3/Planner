@@ -20,6 +20,17 @@ const reducer = (state = defaultState, action) => {
   const temp_list_order = JSON.parse(JSON.stringify(state.list_order))
   switch (action.type) {
     case "change_display":
+      fetch('http://127.0.0.1:5005/edit_task_day', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          task_id: action.payload.task,
+          day: action.payload.day,
+          value: (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
+        }),
+      })
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "change_status":
