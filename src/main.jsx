@@ -4,7 +4,6 @@ import App from './App.jsx'
 import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-const a = [1, 0]
 
 var response = await fetch('http://127.0.0.1:5005/get_week_tasks/2022-07-03');
 const tasks = await response.json();
@@ -24,6 +23,17 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "change_status":
+      fetch('http://127.0.0.1:5005/edit_task_status', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          task_id: action.payload.task,
+          status: (temp_tasks[action.payload.task].status + 1) % 3
+        }),
+      })
+      console.log(action.payload.task)
       temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
