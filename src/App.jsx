@@ -6,9 +6,6 @@ function App() {
     <div className="App">
       <Tracker />
       <List />
-      <button onClick={() => fetch('http://127.0.0.1:5005/get_week/2022-07-03', {
-      }).then(response => response.json()).then(data => console.log(data))
-      }>Отправить запрос</button>
     </div>
   )
 }
