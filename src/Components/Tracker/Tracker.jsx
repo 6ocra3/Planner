@@ -37,23 +37,23 @@ function Tracker() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            const new_tracker_order = []
+            e.target.parentElement.classList.remove('top')
+            e.target.parentElement.classList.remove('bot')
+            console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY) ? "Top" : "Bot")
             if (key != dragTask) {
-                tracker_order.map((v) => {
-                    if (v == key) {
-                        new_tracker_order.push(dragTask)
-                    }
-                    else if (v == dragTask) {
-                        new_tracker_order.push(key)
-                    }
-                    else {
-                        new_tracker_order.push(v)
-                    }
-                })
+                const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+                new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
+                const ind = new_tracker_order.indexOf(key)
+                console.log(ind)
+                if ((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)) {
+                    new_tracker_order.splice(ind, 0, dragTask)
+                }
+                else {
+                    new_tracker_order.splice(ind + 1, 0, dragTask)
+                }
                 dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                console.log(new_tracker_order)
             }
-            console.log(new_tracker_order)
-
         }
         return (
             <section key={key} className="task">
