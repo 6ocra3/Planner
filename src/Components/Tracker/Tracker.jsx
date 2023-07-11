@@ -21,15 +21,13 @@ function Tracker() {
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
             console.log(e.target)
-            e.target.style.webkitUserSelect = "none"
+            e.target.parentElement.classList.add("yandex-drag-disable")
             console.log(key)
         }
         function dragEndHandler(e) {
-
         }
         function dragOverHandler(e) {
             e.preventDefault();
-            e.target.style.webkitUserSelect = "none"
         }
         function dropHandler(e, key) {
             e.preventDefault();
@@ -63,7 +61,7 @@ function Tracker() {
                         onDragEnd={(e) => dragEndHandler(e)}
                         onDragOver={(e) => dragOverHandler(e)}
                         onDrop={(e) => dropHandler(e, key)}
-                        draggable={true}>{task}</h4>
+                        draggable>{task}</h4>
 
                     <div className='bot_line'></div>
                 </div>

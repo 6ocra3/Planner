@@ -111,3 +111,7 @@
     .week__days {
         display: flex;
     }
+
+    .yandex-drag-disable {
+        cursor: grab;
+    }
