@@ -19,6 +19,22 @@ function Tracker() {
     function getTaskSection(el, key) {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
+        function startHandler(e, key) {
+            console.log(e.target)
+            e.target.style.webkitUserSelect = "none"
+            console.log(key)
+        }
+        function dragEndHandler(e) {
+
+        }
+        function dragOverHandler(e) {
+            e.preventDefault();
+            e.target.style.webkitUserSelect = "none"
+        }
+        function dropHandler(e, key) {
+            e.preventDefault();
+            console.log(key)
+        }
         return (
             <section key={key} className="task">
                 <div className="task__days">
@@ -40,7 +56,15 @@ function Tracker() {
                         onMouseMove={(e) => (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
                             ? Top(e)
                             : Bot(e)}
-                        className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}>{task}</h4>
+                        className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
+
+                        onDragStart={(e) => startHandler(e, key)}
+                        onDragLeave={(e) => dragEndHandler(e)}
+                        onDragEnd={(e) => dragEndHandler(e)}
+                        onDragOver={(e) => dragOverHandler(e)}
+                        onDrop={(e) => dropHandler(e, key)}
+                        draggable={true}>{task}</h4>
+
                     <div className='bot_line'></div>
                 </div>
             </section>
