@@ -2,36 +2,58 @@ import { ArrowRight } from 'react-feather'
 import './Tracker.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react';
 
 function Tracker() {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
+    const [dragTask, setDragTask] = useState()
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
-        // e.target.parentElement.classList.add('top')
-        // e.target.parentElement.classList.remove('bot')
+        e.target.parentElement.classList.add('top')
+        e.target.parentElement.classList.remove('bot')
     }
     function Bot(e) {
-        // e.target.parentElement.classList.add('bot')
-        // e.target.parentElement.classList.remove('top')
+        e.target.parentElement.classList.add('bot')
+        e.target.parentElement.classList.remove('top')
     }
     function getTaskSection(el, key) {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
-            console.log(e.target)
             e.target.parentElement.classList.add("yandex-drag-disable")
-            console.log(key)
+            setDragTask(key)
         }
         function dragEndHandler(e) {
+            e.target.parentElement.classList.remove('top')
+            e.target.parentElement.classList.remove('bot')
         }
         function dragOverHandler(e) {
             e.preventDefault();
+            (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
+                ? Top(e)
+                : Bot(e)
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            console.log(key)
+            const new_tracker_order = []
+            if (key != dragTask) {
+                tracker_order.map((v) => {
+                    if (v == key) {
+                        new_tracker_order.push(dragTask)
+                    }
+                    else if (v == dragTask) {
+                        new_tracker_order.push(key)
+                    }
+                    else {
+                        new_tracker_order.push(v)
+                    }
+                })
+                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+            }
+            console.log(new_tracker_order)
+
         }
         return (
             <section key={key} className="task">
@@ -51,9 +73,6 @@ function Tracker() {
                             e.target.parentElement.classList.remove('top')
                             e.target.parentElement.classList.remove('bot')
                         }}
-                        onMouseMove={(e) => (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
-                            ? Top(e)
-                            : Bot(e)}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
 
                         onDragStart={(e) => startHandler(e, key)}
