@@ -5,14 +5,29 @@ import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-var response = await fetch('http://127.0.0.1:5005/get_week_tasks/2022-07-03');
-const tasks = await response.json();
-var response = await fetch('http://127.0.0.1:5005/get_week/2022-07-03');
-const week = await response.json();
-const defaultState = tasks && week && {
-  tasks: tasks,
-  tracker_order: week.tracker_order,
-  list_order: week.list_order
+const backendWork = false
+let defaultState;
+if (backendWork) {
+  var response = await fetch('http://127.0.0.1:5005/get_week_tasks/2022-07-03');
+  const tasks = await response.json();
+  var response = await fetch('http://127.0.0.1:5005/get_week/2022-07-03');
+  const week = await response.json();
+  defaultState = tasks && week && {
+    tasks: tasks,
+    tracker_order: week.tracker_order,
+    list_order: week.list_order
+  }
+}
+else {
+  defaultState = {
+    tasks: {
+      1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
+      2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
+      3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
+    },
+    tracker_order: [3, 2, 1],
+    list_order: [[1, 3], [2]]
+  }
 }
 
 const reducer = (state = defaultState, action) => {
