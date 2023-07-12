@@ -2,13 +2,12 @@ import { ArrowRight } from 'react-feather'
 import './Tracker.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react';
 
-function Tracker() {
+
+function Tracker({ dragTask, setDragTask }) {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
-    const [dragTask, setDragTask] = useState()
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
         e.target.parentElement.classList.add('top')
@@ -37,10 +36,11 @@ function Tracker() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
+            console.log(key)
             e.target.parentElement.classList.remove('top')
             e.target.parentElement.classList.remove('bot')
             console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY) ? "Top" : "Bot")
-            if (key != dragTask) {
+            if (dragTask && key != dragTask) {
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                 new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
                 const ind = new_tracker_order.indexOf(key)

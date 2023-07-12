@@ -32,7 +32,9 @@ function List() {
                             {v.map((el) => {
                                 return (<li key={el} className="list__point">
                                     <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: el } }) }}>{icons[tasks[el].status]} </div>
-                                    <p className={tasks[el].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: el } }) }}>{tasks[el].task.length > 20 ? tasks[el].task.slice(0, 18) + "..." : tasks[el].task}</p></li>)
+                                    <p className={tasks[el].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: el } }) }}
+                                        draggable={true}
+                                    >{tasks[el].task.length > 20 ? tasks[el].task.slice(0, 18) + "..." : tasks[el].task}</p></li>)
                             }
                             )}
                             {inp == index ? <li className="list__point">
@@ -50,8 +52,6 @@ function List() {
                 })}
             </div>
         </div>
-
-
     )
 }
 
