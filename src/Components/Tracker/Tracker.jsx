@@ -4,10 +4,11 @@ import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
 
 
-function Tracker({ dragTask, setDragTask }) {
+function Tracker() {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
+    const dragTask = useSelector(state => state.drag_task)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
         e.target.parentElement.classList.add('top')
@@ -22,7 +23,7 @@ function Tracker({ dragTask, setDragTask }) {
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
             e.target.parentElement.classList.add("yandex-drag-disable")
-            setDragTask(key)
+            dispatch({ type: "test", payload: { key: key } })
         }
         function dragEndHandler(e) {
             e.target.parentElement.classList.remove('top')

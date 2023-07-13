@@ -15,7 +15,8 @@ if (backendWork) {
   defaultState = tasks && week && {
     tasks: tasks,
     tracker_order: week.tracker_order,
-    list_order: week.list_order
+    list_order: week.list_order,
+    drag_task: undefined
   }
 }
 else {
@@ -25,7 +26,7 @@ else {
       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
       3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
     },
-    tracker_order: [3, 2, 1],
+    tracker_order: [3, 1],
     list_order: [[1, 3], [2]]
   }
 }
@@ -34,6 +35,8 @@ const reducer = (state = defaultState, action) => {
   const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
   const temp_list_order = JSON.parse(JSON.stringify(state.list_order))
   switch (action.type) {
+    case "drag_start":
+      return { ...state, drag_task: action.payload.key }
     case "change_display":
       fetch('http://127.0.0.1:5005/edit_task_day', {
         method: "PUT",
