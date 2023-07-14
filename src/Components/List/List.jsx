@@ -12,7 +12,6 @@ function List() {
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
-    const dragTask = useSelector(state => state.drag_task)
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
@@ -24,7 +23,7 @@ function List() {
 
         function startHandler(e, key) {
             e.target.parentElement.classList.add("yandex-drag-disable")
-            dispatch({ type: "test", payload: { key: key } })
+            e.dataTransfer.setData("key", key)
         }
         function dragEndHandler(e) {
             e.target.parentElement.classList.remove('top')
@@ -36,7 +35,7 @@ function List() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-
+            const dragTask = e.dataTransfer.getData("key")
         }
         return (<li key={key} className="list__point">
             <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>

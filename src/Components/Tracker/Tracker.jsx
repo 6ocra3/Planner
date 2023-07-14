@@ -8,7 +8,6 @@ function Tracker() {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
-    const dragTask = useSelector(state => state.drag_task)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e) {
         e.target.parentElement.classList.add('top')
@@ -23,7 +22,7 @@ function Tracker() {
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
             e.target.parentElement.classList.add("yandex-drag-disable")
-            dispatch({ type: "test", payload: { key: key } })
+            e.dataTransfer.setData("key", key)
         }
         function dragEndHandler(e) {
             e.target.parentElement.classList.remove('top')
@@ -37,11 +36,24 @@ function Tracker() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            console.log(key)
             e.target.parentElement.classList.remove('top')
             e.target.parentElement.classList.remove('bot')
-            console.log((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY) ? "Top" : "Bot")
-            if (dragTask && key != dragTask) {
+            const dragTask = e.dataTransfer.getData("key")
+            console.log(typeof (dragTask))
+            console.log(tracker_order, tracker_order.indexOf(dragTask) == -1)
+            if (tracker_order.indexOf(dragTask) == -1) {
+                console.log(1234)
+                const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+                const ind = new_tracker_order.indexOf(key)
+                if ((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)) {
+                    new_tracker_order.splice(ind, 0, dragTask)
+                }
+                else {
+                    new_tracker_order.splice(ind + 1, 0, dragTask)
+                }
+                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+            }
+            else if (dragTask && key != dragTask) {
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                 new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
                 const ind = new_tracker_order.indexOf(key)
@@ -69,13 +81,7 @@ function Tracker() {
                 <div>
                     <div className='top_line'></div>
                     <h4
-                        onClick={(e) => { console.log(e.target.parentElement) }}
-                        onMouseLeave={(e) => {
-                            e.target.parentElement.classList.remove('top')
-                            e.target.parentElement.classList.remove('bot')
-                        }}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
-
                         onDragStart={(e) => startHandler(e, key)}
                         onDragLeave={(e) => dragEndHandler(e)}
                         onDragEnd={(e) => dragEndHandler(e)}
