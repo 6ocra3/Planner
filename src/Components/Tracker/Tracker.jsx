@@ -21,7 +21,6 @@ function Tracker() {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
-            e.target.parentElement.classList.add("yandex-drag-disable")
             e.dataTransfer.setData("key", key)
         }
         function dragEndHandler(e) {

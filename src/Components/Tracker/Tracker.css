@@ -69,9 +69,14 @@
         display: block;
     }
 
-    .top .task__text,
+    .top .task__text {
+        margin-top: 0;
+        margin-bottom: 1px;
+    }
+
     .bot .task__text {
-        height: 19px;
+        margin-top: 1px;
+        margin-bottom: 0;
     }
 
     .task__text {
@@ -79,7 +84,7 @@
         text-align: left;
         font-size: 13px;
         line-height: 18px;
-        height: 20px;
+        margin: 1px 0;
     }
 
     .week {

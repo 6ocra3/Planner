@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Plus } from 'react-feather'
 import './List.css'
 import shortid from 'shortid';
@@ -9,9 +9,11 @@ import { FiCheck } from "react-icons/fi";
 
 function List() {
     const dispatch = useDispatch()
+    const [height, setHeight] = useState(0)
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
+    const listsRef = useRef()
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
@@ -22,7 +24,6 @@ function List() {
     function getTask(key) {
 
         function startHandler(e, key) {
-            e.target.parentElement.classList.add("yandex-drag-disable")
             e.dataTransfer.setData("key", key)
         }
         function dragEndHandler(e) {
@@ -49,13 +50,19 @@ function List() {
             >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p></li>)
     }
 
+    useEffect(() => {
+        if (listsRef.current.clientHeight > height) {
+            setHeight(listsRef.current.clientHeight)
+        }
+    }, [listsRef.current])
+
     return (
         <div className="list">
             <h1 className="list__header">Сделать за неделю</h1>
-            <div className="list__content">
+            <div className="list__content" ref={listsRef}>
                 {tasks && list_order && list_order.map((v, index) => {
                     return (
-                        <ul key={shortid.generate()} className='list__ul'>
+                        <ul key={shortid.generate()} ref={listsRef} className='list__ul'>
                             {v.map((key) => {
                                 return (getTask(key))
                             }
@@ -73,9 +80,15 @@ function List() {
                             }
                         </ul>)
                 })}
+                <div className="list__blank" style={{ height: height + "px" }}></div>
             </div>
-        </div>
+        </div >
     )
 }
-
+// style={{
+//     height: Math.max(...[...listsRef.current.children].reduce((accumulator, item) => {
+//         accumulator.push(Number(item.clientHeight))
+//         return accumulator
+//     }, [])) + "px"
+// }}
 export default List

@@ -40,9 +40,13 @@
 }
 
 .list__content {
-    display: grid;
+    /* display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 5px; */
+    display: flex;
+    flex-direction: row;
     column-gap: 5px;
+    position: relative;
 }
 
 .list__ul {
@@ -112,4 +116,9 @@
 
 .list__input:focus {
     outline: none;
+}
+
+.list__blank {
+    width: 100px;
+    height: 20px;
 }
