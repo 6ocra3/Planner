@@ -38,7 +38,7 @@ function Tracker() {
             e.preventDefault();
             e.target.parentElement.classList.remove('top')
             e.target.parentElement.classList.remove('bot')
-            const dragTask = e.dataTransfer.getData("key")
+            const dragTask = Number(e.dataTransfer.getData("key"))
             console.log(typeof (dragTask))
             console.log(tracker_order, tracker_order.indexOf(dragTask) == -1)
             if (tracker_order.indexOf(dragTask) == -1) {
