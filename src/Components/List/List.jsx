@@ -10,10 +10,12 @@ import { FiCheck } from "react-icons/fi";
 function List() {
     const dispatch = useDispatch()
     const [height, setHeight] = useState(0)
+    const [width, setWidth] = useState(0)
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
     const listsRef = useRef()
+    const blankDivRef = useRef()
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
@@ -25,6 +27,8 @@ function List() {
 
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
+            blankDivRef.current.style.width = width + "px"
+            blankDivRef.current.style.borderLeft = "solid 0.5px #4f5b66"
         }
         function dragEndHandler(e) {
             e.target.parentElement.classList.remove('top')
@@ -50,10 +54,16 @@ function List() {
             >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p></li>)
     }
 
+    function blankListDragOver(e) {
+        console.log(12345)
+
+    }
+
     useEffect(() => {
         if (listsRef.current.clientHeight > height) {
             setHeight(listsRef.current.clientHeight)
         }
+        setWidth(listsRef.current.clientWidth)
     }, [listsRef.current])
 
     return (
@@ -80,7 +90,9 @@ function List() {
                             }
                         </ul>)
                 })}
-                <div className="list__blank" style={{ height: height + "px" }}></div>
+                <div
+                    onDragOver={(e) => blankListDragOver(e)}
+                    className="list__blank" style={{ height: height + "px", width: "20px" }} ref={blankDivRef}></div>
             </div>
         </div >
     )

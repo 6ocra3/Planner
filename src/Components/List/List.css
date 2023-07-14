@@ -23,22 +23,6 @@
     margin-bottom: 20px;
 }
 
-
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 .list__content {
     /* display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -54,7 +38,7 @@
     border-right: solid 0.5px #4f5b66;
 }
 
-.list__ul:last-child {
+.list__ul:last-of-type {
     border: none;
 }
 
