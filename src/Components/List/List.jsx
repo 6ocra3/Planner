@@ -16,6 +16,7 @@ function List() {
     const list_order = useSelector(state => state.list_order)
     const listsRef = useRef()
     const blankDivRef = useRef()
+    const mainListRef = useRef()
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
@@ -27,8 +28,7 @@ function List() {
 
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
-            blankDivRef.current.style.width = width + "px"
-            blankDivRef.current.style.borderLeft = "solid 0.5px #4f5b66"
+            blankDivRef.current.style.display = "block"
         }
         function dragEndHandler(e) {
             e.target.parentElement.classList.remove('top')
@@ -40,6 +40,7 @@ function List() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
+            blankDivRef.current.style.display = "none"
             const dragTask = e.dataTransfer.getData("key")
         }
         return (<li key={key} className="list__point">
@@ -55,8 +56,8 @@ function List() {
     }
 
     function blankListDragOver(e) {
-        console.log(12345)
-
+        e.preventDefault();
+        console.log(e.target.children[0])
     }
 
     useEffect(() => {
@@ -67,7 +68,19 @@ function List() {
     }, [listsRef.current])
 
     return (
-        <div className="list">
+        <div ref={mainListRef} onDragOver={(e) => {
+            e.preventDefault()
+            blankDivRef.current.style.display = "block"
+        }}
+            onDragLeave={(e) => {
+                e.preventDefault()
+                if (!mainListRef.current.contains(e.relatedTarget)) {
+                    blankDivRef.current.style.display = "none";
+                }
+
+            }}
+            onDrop={(e) => { blankDivRef.current.style.display = "none"; }}
+            className="list">
             <h1 className="list__header">Сделать за неделю</h1>
             <div className="list__content" ref={listsRef}>
                 {tasks && list_order && list_order.map((v, index) => {
@@ -91,8 +104,19 @@ function List() {
                         </ul>)
                 })}
                 <div
-                    onDragOver={(e) => blankListDragOver(e)}
-                    className="list__blank" style={{ height: height + "px", width: "20px" }} ref={blankDivRef}></div>
+                    onDragOver={(e) => {
+                        e.preventDefault()
+                        blankDivRef.current.children[0].children[1].style.color = "#4f5b66"
+                    }}
+                    onDragLeave={(e) => {
+                        e.preventDefault()
+                        blankDivRef.current.children[0].children[1].style.color = "#c0c5ce"
+                    }}
+                    className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>
+                    <div className="list__add">
+                        <Plus className="list__add_icon" color='#4f5b66' size={15}></Plus> <p>Добавить столбец</p>
+                    </div>
+                </div>
             </div>
         </div >
     )
