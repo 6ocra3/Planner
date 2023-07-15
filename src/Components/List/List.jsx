@@ -110,7 +110,9 @@ function List() {
                     }}
                     onDragLeave={(e) => {
                         e.preventDefault()
-                        blankDivRef.current.children[0].children[1].style.color = "#c0c5ce"
+                        if (!blankDivRef.current.contains(e.relatedTarget)) {
+                            blankDivRef.current.children[0].children[1].style.color = "#c0c5ce"
+                        }
                     }}
                     className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>
                     <div className="list__add">
