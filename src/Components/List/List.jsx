@@ -68,10 +68,11 @@ function List() {
     }, [listsRef.current])
 
     return (
-        <div ref={mainListRef} onDragOver={(e) => {
-            e.preventDefault()
-            blankDivRef.current.style.display = "block"
-        }}
+        <div ref={mainListRef}
+            onDragEnter={(e) => {
+                e.preventDefault()
+                blankDivRef.current.style.display = "block"
+            }}
             onDragLeave={(e) => {
                 e.preventDefault()
                 if (!mainListRef.current.contains(e.relatedTarget)) {
@@ -113,6 +114,25 @@ function List() {
                         if (!blankDivRef.current.contains(e.relatedTarget)) {
                             blankDivRef.current.children[0].children[1].style.color = "#c0c5ce"
                         }
+                    }}
+                    onDrop={(e) => {
+                        blankDivRef.current.style.display = "none";
+                        const new_list_order = JSON.parse(JSON.stringify(list_order))
+                        const b = new Array()
+                        const key = Number(e.dataTransfer.getData("key"))
+                        b.push(key)
+                        console.log(new_list_order)
+                        const updated_list_order = new_list_order.map((subArray) => {
+                            return subArray.filter((element) => {
+                                if (Array.isArray(element)) {
+                                    return !element.includes(key);
+                                }
+                                return element !== key;
+                            });
+                        });
+                        updated_list_order.push(b)
+                        console.log(updated_list_order)
+                        dispatch({ type: "change_list_order", payload: { new_list_order: updated_list_order } })
                     }}
                     className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>
                     <div className="list__add">

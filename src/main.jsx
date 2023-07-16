@@ -86,6 +86,9 @@ const reducer = (state = defaultState, action) => {
     case "change_tracker_order":
       const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))
       return { ...state, tracker_order: new_tracker_order }
+    case "change_list_order":
+      const new_list_order = JSON.parse(JSON.stringify(action.payload.new_list_order))
+      return { ...state, list_order: new_list_order }
     case "add_to_tr":
       if (state.tracker_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tracker_order]
