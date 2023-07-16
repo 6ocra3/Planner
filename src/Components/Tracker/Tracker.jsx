@@ -17,7 +17,7 @@ function Tracker() {
         e.target.parentElement.classList.add('bot')
         e.target.parentElement.classList.remove('top')
     }
-    function getTaskSection(el, key) {
+    function getTaskSection(el, key, last) {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
@@ -38,8 +38,6 @@ function Tracker() {
             e.target.parentElement.classList.remove('top')
             e.target.parentElement.classList.remove('bot')
             const dragTask = Number(e.dataTransfer.getData("key"))
-            console.log(typeof (dragTask))
-            console.log(tracker_order, tracker_order.indexOf(dragTask) == -1)
             if (tracker_order.indexOf(dragTask) == -1) {
                 console.log(1234)
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
@@ -79,6 +77,13 @@ function Tracker() {
                 <div>
                     <div className='top_line'></div>
                     <h4
+                        onClick={(e) => {
+                            const currentH4 = e.target;
+                            const parentDiv = currentH4.parentElement;
+                            const botLine = parentDiv.parentElement.nextElementSibling.children[1].children[0]
+                            botLine.style.borderTop = "solid 1px #4f5b66;"
+                            console.log(botLine)
+                        }}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
                         onDragStart={(e) => startHandler(e, key)}
                         onDragLeave={(e) => dragEndHandler(e)}
@@ -87,7 +92,7 @@ function Tracker() {
                         onDrop={(e) => dropHandler(e, key)}
                         draggable>{task}</h4>
 
-                    <div className='bot_line'></div>
+                    {last && <div className='bot_line'></div>}
                 </div>
             </section>
         )
@@ -104,8 +109,8 @@ function Tracker() {
                 <h1 className="week__header">Список дел</h1>
             </header>
             <div className="tasks">
-                {tasks && tracker_order && tracker_order.map((key) => {
-                    return getTaskSection(tasks[key], key)
+                {tasks && tracker_order && tracker_order.map((key, index) => {
+                    return getTaskSection(tasks[key], key, index == (tracker_order.length - 1))
                 })}
             </div>
         </div>
