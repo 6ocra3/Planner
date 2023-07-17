@@ -31,8 +31,6 @@ function List() {
             blankDivRef.current.style.display = "block"
         }
         function dragEndHandler(e) {
-            e.target.parentElement.classList.remove('top')
-            e.target.parentElement.classList.remove('bot')
         }
         function dragOverHandler(e) {
             e.preventDefault();

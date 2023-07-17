@@ -43,7 +43,23 @@ function Tracker() {
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
         }
-        function dragEndHandler(e) {
+        function dragEndHandler(e, index) {
+            let div;
+            if (e.target.parentElement.nodeName === "SECTION") {
+                div = e.target
+            }
+            else {
+                div = e.target.parentElement
+            }
+            if (!div.contains(e.relatedTarget) && e.relatedTarget.classList[0] != "top_line" && e.relatedTarget.classList[0] != undefined) {
+                div.classList.remove("top")
+                if (index == tracker_order.length - 1) {
+                    div.classList.remove("bot")
+                }
+                else {
+                    div.parentElement.nextElementSibling.children[1].classList.remove("top")
+                }
+            }
         }
         function dragOverHandler(e, index) {
             let div;
@@ -101,8 +117,8 @@ function Tracker() {
                 </div>
                 <div
                     onDragOver={(e) => dragOverHandler(e, index)}
-                    onDragLeave={(e) => dragEndHandler(e)}
-                    onDragEnd={(e) => dragEndHandler(e)}>
+                    onDragLeave={(e) => dragEndHandler(e, index)}
+                    onDragEnd={(e) => dragEndHandler(e, index)}>
 
                     <div className='top_line'></div>
                     <h4
