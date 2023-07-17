@@ -9,29 +9,47 @@ function Tracker() {
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    function Top(e) {
-        e.target.parentElement.classList.add('top')
-        e.target.parentElement.classList.remove('bot')
+    function Top(e, index) {
+        if (index == 0) {
+
+        }
+        else if (index == tracker_order.length - 1) {
+
+        }
+        else {
+            e.target.parentElement.classList.add('top')
+        }
     }
-    function Bot(e) {
-        e.target.parentElement.classList.add('bot')
-        e.target.parentElement.classList.remove('top')
+    function Bot(e, index) {
+        let div;
+        if (e.target.nodeName === "DIV") {
+            div = e.target
+        }
+        else {
+            div = e.target.parentElement
+        }
+        if (index == 0) {
+        }
+        else if (index == tracker_order.length - 1) {
+        }
+        else {
+            // console.log(e.target.parentElement.parentElement.nextElementSibling)
+            div.parentElement.nextElementSibling.children[1].classList.add('top')
+        }
     }
-    function getTaskSection(el, key, last) {
+    function getTaskSection(el, key, index) {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
         }
         function dragEndHandler(e) {
-            e.target.parentElement.classList.remove('top')
-            e.target.parentElement.classList.remove('bot')
         }
-        function dragOverHandler(e) {
+        function dragOverHandler(e, index) {
             e.preventDefault();
             (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
-                ? Top(e)
-                : Bot(e)
+                ? Top(e, index)
+                : Bot(e, index)
         }
         function dropHandler(e, key) {
             e.preventDefault();
@@ -74,25 +92,26 @@ function Tracker() {
                         }} key={shortid.generate()} className={"task__day " + cs[v] + (tasks[key].status != 0 ? " task_finished" : "")}>{v == 3 && <ArrowRight size={18}></ArrowRight>}</div>
                     })}
                 </div>
-                <div>
+                <div
+                    onDragOver={(e) => dragOverHandler(e, index)}
+                    onDragLeave={(e) => dragEndHandler(e)}
+                    onDragEnd={(e) => dragEndHandler(e)}>
+
                     <div className='top_line'></div>
                     <h4
                         onClick={(e) => {
-                            const currentH4 = e.target;
-                            const parentDiv = currentH4.parentElement;
-                            const botLine = parentDiv.parentElement.nextElementSibling.children[1].children[0]
-                            botLine.style.borderTop = "solid 1px #4f5b66;"
-                            console.log(botLine)
+                            // const currentH4 = e.target;
+                            // const parentDiv = currentH4.parentElement;
+                            // const botLine = parentDiv.parentElement.nextElementSibling.children[1]
+                            // botLine.classList.add('top')
+                            console.log(e.target.nextElementSibling)
                         }}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
                         onDragStart={(e) => startHandler(e, key)}
-                        onDragLeave={(e) => dragEndHandler(e)}
-                        onDragEnd={(e) => dragEndHandler(e)}
-                        onDragOver={(e) => dragOverHandler(e)}
                         onDrop={(e) => dropHandler(e, key)}
                         draggable>{task}</h4>
 
-                    {last && <div className='bot_line'></div>}
+                    {index == (tracker_order.length - 1) && <div className='bot_line'></div>}
                 </div>
             </section>
         )
@@ -110,7 +129,7 @@ function Tracker() {
             </header>
             <div className="tasks">
                 {tasks && tracker_order && tracker_order.map((key, index) => {
-                    return getTaskSection(tasks[key], key, index == (tracker_order.length - 1))
+                    return getTaskSection(tasks[key], key, index)
                 })}
             </div>
         </div>

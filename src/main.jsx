@@ -24,10 +24,13 @@ else {
     tasks: {
       1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
-      3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
+      3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+      4: { task: "Hello world 4", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+      5: { task: "Hello world 5", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+      6: { task: "Hello world 6", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
     },
-    tracker_order: [3, 1],
-    list_order: [[1, 3], [2]]
+    tracker_order: [3, 1, 4, 6, 2],
+    list_order: [[1, 3, 5], [2, 4, 6]]
   }
 }
 
