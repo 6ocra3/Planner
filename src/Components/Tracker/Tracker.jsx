@@ -9,15 +9,8 @@ function Tracker() {
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-    function Top(e, index) {
+    function Top(div, index) {
         console.log("top")
-        let div;
-        if (e.target.parentElement.nodeName === "SECTION") {
-            div = e.target
-        }
-        else {
-            div = e.target.parentElement
-        }
         if (index == 0) {
             div.classList.add("top")
             div.parentElement.nextElementSibling.children[1].classList.remove('top')
@@ -31,15 +24,7 @@ function Tracker() {
             div.classList.add('top')
         }
     }
-    function Bot(e, index) {
-        console.log(e.target.parentElement.nodeName)
-        let div;
-        if (e.target.parentElement.nodeName === "SECTION") {
-            div = e.target
-        }
-        else {
-            div = e.target.parentElement
-        }
+    function Bot(div, index) {
         div.classList.remove("top")
         if (index == 0) {
             div.parentElement.nextElementSibling.children[1].classList.add('top')
@@ -61,10 +46,17 @@ function Tracker() {
         function dragEndHandler(e) {
         }
         function dragOverHandler(e, index) {
+            let div;
+            if (e.target.parentElement.nodeName === "SECTION") {
+                div = e.target
+            }
+            else {
+                div = e.target.parentElement
+            }
             e.preventDefault();
-            (e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)
-                ? Top(e, index)
-                : Bot(e, index)
+            (e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)
+                ? Top(div, index)
+                : Bot(div, index)
         }
         function dropHandler(e, key) {
             e.preventDefault();
