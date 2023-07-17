@@ -10,6 +10,7 @@ function Tracker() {
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e, index) {
+        console.log("top")
         let div;
         if (e.target.parentElement.nodeName === "SECTION") {
             div = e.target
@@ -18,10 +19,12 @@ function Tracker() {
             div = e.target.parentElement
         }
         if (index == 0) {
-
+            div.classList.add("top")
+            div.parentElement.nextElementSibling.children[1].classList.remove('top')
         }
         else if (index == tracker_order.length - 1) {
-
+            div.classList.remove("bot")
+            div.classList.add("top")
         }
         else {
             div.parentElement.nextElementSibling.children[1].classList.remove('top')
@@ -29,6 +32,7 @@ function Tracker() {
         }
     }
     function Bot(e, index) {
+        console.log(e.target.parentElement.nodeName)
         let div;
         if (e.target.parentElement.nodeName === "SECTION") {
             div = e.target
@@ -41,6 +45,7 @@ function Tracker() {
             div.parentElement.nextElementSibling.children[1].classList.add('top')
         }
         else if (index == tracker_order.length - 1) {
+            div.classList.remove("top")
             div.classList.add("bot")
         }
         else {
