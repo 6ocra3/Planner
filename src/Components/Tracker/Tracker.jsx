@@ -10,30 +10,40 @@ function Tracker() {
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(e, index) {
-        if (index == 0) {
-
-        }
-        else if (index == tracker_order.length - 1) {
-
-        }
-        else {
-            e.target.parentElement.classList.add('top')
-        }
-    }
-    function Bot(e, index) {
         let div;
-        if (e.target.nodeName === "DIV") {
+        if (e.target.parentElement.nodeName === "SECTION") {
             div = e.target
         }
         else {
             div = e.target.parentElement
         }
         if (index == 0) {
+
         }
         else if (index == tracker_order.length - 1) {
+
         }
         else {
-            // console.log(e.target.parentElement.parentElement.nextElementSibling)
+            div.parentElement.nextElementSibling.children[1].classList.remove('top')
+            div.classList.add('top')
+        }
+    }
+    function Bot(e, index) {
+        let div;
+        if (e.target.parentElement.nodeName === "SECTION") {
+            div = e.target
+        }
+        else {
+            div = e.target.parentElement
+        }
+        div.classList.remove("top")
+        if (index == 0) {
+            div.parentElement.nextElementSibling.children[1].classList.add('top')
+        }
+        else if (index == tracker_order.length - 1) {
+            div.classList.add("bot")
+        }
+        else {
             div.parentElement.nextElementSibling.children[1].classList.add('top')
         }
     }
