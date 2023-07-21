@@ -60,7 +60,7 @@ function Tracker() {
             else {
                 div = e.target.parentElement
             }
-            if (!div.contains(e.relatedTarget) && e.relatedTarget.classList[0] != "top_line" && e.relatedTarget.classList[0] != undefined) {
+            if (!div.contains(e.relatedTarget) && e.relatedTarget?.classList[0] != "top_line" && e.relatedTarget?.classList[0] != undefined) {
                 div.classList.remove("top")
                 if (index == tracker_order.length - 1) {
                     div.classList.remove("bot")
@@ -92,21 +92,19 @@ function Tracker() {
             else {
                 div = e.target.parentElement
             }
-            if (!div.contains(e.relatedTarget) && e.relatedTarget.classList[0] != "top_line" && e.relatedTarget.classList[0] != undefined) {
-                div.classList.remove("top")
-                if (index == tracker_order.length - 1) {
-                    div.classList.remove("bot")
-                }
-                else {
-                    div.parentElement.nextElementSibling.children[1].classList.remove("top")
-                }
+            div.classList.remove("top")
+            if (index == tracker_order.length - 1) {
+                div.classList.remove("bot")
+            }
+            else {
+                div.parentElement.nextElementSibling.children[1].classList.remove("top")
             }
             const dragTask = Number(e.dataTransfer.getData("key"))
             if (tracker_order.indexOf(dragTask) == -1) {
                 console.log(1234)
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                 const ind = new_tracker_order.indexOf(key)
-                if ((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)) {
+                if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
                     new_tracker_order.splice(ind, 0, dragTask)
                 }
                 else {
@@ -119,7 +117,7 @@ function Tracker() {
                 new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
                 const ind = new_tracker_order.indexOf(key)
                 console.log(ind)
-                if ((e.clientY - e.target.getBoundingClientRect().y) < (e.target.getBoundingClientRect().y + 20 - e.clientY)) {
+                if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
                     new_tracker_order.splice(ind, 0, dragTask)
                 }
                 else {
@@ -141,8 +139,8 @@ function Tracker() {
                 <div
                     onDragOver={(e) => dragOverHandler(e, index)}
                     onDragLeave={(e) => dragEndHandler(e, index)}
-                    onDragEnd={(e) => dragEndHandler(e, index)}>
-
+                    onDragEnd={(e) => dragEndHandler(e, index)}
+                    onDrop={(e) => dropHandler(e, key)}>
                     <div className='top_line'></div>
                     <h4
                         onClick={(e) => {
@@ -154,7 +152,6 @@ function Tracker() {
                         }}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
                         onDragStart={(e) => startHandler(e, key)}
-                        onDrop={(e) => dropHandler(e, key)}
                         draggable>{task}</h4>
 
                     {index == (tracker_order.length - 1) && <div className='bot_line'></div>}
