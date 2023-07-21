@@ -85,8 +85,22 @@ function Tracker() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            e.target.parentElement.classList.remove('top')
-            e.target.parentElement.classList.remove('bot')
+            let div;
+            if (e.target.parentElement.nodeName === "SECTION") {
+                div = e.target
+            }
+            else {
+                div = e.target.parentElement
+            }
+            if (!div.contains(e.relatedTarget) && e.relatedTarget.classList[0] != "top_line" && e.relatedTarget.classList[0] != undefined) {
+                div.classList.remove("top")
+                if (index == tracker_order.length - 1) {
+                    div.classList.remove("bot")
+                }
+                else {
+                    div.parentElement.nextElementSibling.children[1].classList.remove("top")
+                }
+            }
             const dragTask = Number(e.dataTransfer.getData("key"))
             if (tracker_order.indexOf(dragTask) == -1) {
                 console.log(1234)
