@@ -64,7 +64,7 @@ function Tracker({ dragingTask, setDragingTask }) {
             else {
                 div = e.target.parentElement
             }
-            if (!div.contains(e.relatedTarget) && e.relatedTarget?.classList[0] != "top_line" && e.relatedTarget?.classList[0] != undefined) {
+            if (!div.contains(e.relatedTarget) && e.relatedTarget?.classList[0] != "top_line" && (e.relatedTarget?.classList[0] != undefined || index == tracker_order.length - 1)) {
                 div.classList.remove("top")
                 if (index == tracker_order.length - 1) {
                     div.classList.remove("bot")
