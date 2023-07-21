@@ -1,11 +1,11 @@
-#root {
-  width: 70%;
-  margin: 0 auto;
-  text-align: center;
-}
+ .body {
+   width: 70%;
+   margin: 0 auto;
+   text-align: center;
+ }
 
-.App {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 20px;
-}
+ .App {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   column-gap: 20px;
+ }

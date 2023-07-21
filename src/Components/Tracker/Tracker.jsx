@@ -2,16 +2,15 @@ import { ArrowRight } from 'react-feather'
 import './Tracker.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
-function Tracker() {
+function Tracker({ dragingTask, setDragingTask }) {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
     const tracker_order = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(div, index) {
-        console.log("top")
         if (index == 0) {
             div.classList.add("top")
             div.parentElement.nextElementSibling.children[1].classList.remove('top')
@@ -40,17 +39,22 @@ function Tracker() {
     }
     function getTaskSection(el, key, index) {
         const { task, days } = el
-        const [dragTask, setDragTask] = useState()
         const cs = ["none", "empty", "fill", "arrow"]
+
+        // useEffect(() => {
+        //     if (dragTask) {
+        //         const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+        //         const ind = new_tracker_order.indexOf(key)
+        //         new_tracker_order.splice(ind, 1)
+        //         dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+        //     }
+        // }, [dragTask])
+
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
             e.target.style.marginLeft = "0"
             e.target.style.fontSize = "13px"
-            // const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-            // const ind = new_tracker_order.indexOf(key)
-            // new_tracker_order.splice(ind, 1)
-            // // dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
-
+            setDragingTask(key)
         }
         function dragEndHandler(e, index) {
             let div;
@@ -71,6 +75,8 @@ function Tracker() {
             }
         }
         function dragOverHandler(e, index) {
+            console.log(dragingTask)
+            e.preventDefault();
             let div;
             if (e.target.parentElement.nodeName === "SECTION") {
                 div = e.target
@@ -78,13 +84,14 @@ function Tracker() {
             else {
                 div = e.target.parentElement
             }
-            e.preventDefault();
+
             (e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)
                 ? Top(div, index)
                 : Bot(div, index)
         }
         function dropHandler(e, key) {
             e.preventDefault();
+            e.stopPropagation()
             let div;
             if (e.target.parentElement.nodeName === "SECTION") {
                 div = e.target
@@ -101,7 +108,6 @@ function Tracker() {
             }
             const dragTask = Number(e.dataTransfer.getData("key"))
             if (tracker_order.indexOf(dragTask) == -1) {
-                console.log(1234)
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                 const ind = new_tracker_order.indexOf(key)
                 if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
@@ -116,7 +122,6 @@ function Tracker() {
                 const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                 new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
                 const ind = new_tracker_order.indexOf(key)
-                console.log(ind)
                 if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
                     new_tracker_order.splice(ind, 0, dragTask)
                 }
@@ -124,7 +129,6 @@ function Tracker() {
                     new_tracker_order.splice(ind + 1, 0, dragTask)
                 }
                 dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
-                console.log(new_tracker_order)
             }
         }
         return (
@@ -148,7 +152,6 @@ function Tracker() {
                             // const parentDiv = currentH4.parentElement;
                             // const botLine = parentDiv.parentElement.nextElementSibling.children[1]
                             // botLine.classList.add('top')
-                            console.log(e.target.nextElementSibling)
                         }}
                         className={"task__text " + (tasks[key].status != 0 ? "task_finished" : "")}
                         onDragStart={(e) => startHandler(e, key)}
