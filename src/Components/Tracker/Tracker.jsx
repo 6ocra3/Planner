@@ -2,6 +2,7 @@ import { ArrowRight } from 'react-feather'
 import './Tracker.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react';
 
 
 function Tracker() {
@@ -39,9 +40,17 @@ function Tracker() {
     }
     function getTaskSection(el, key, index) {
         const { task, days } = el
+        const [dragTask, setDragTask] = useState()
         const cs = ["none", "empty", "fill", "arrow"]
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
+            e.target.style.marginLeft = "0"
+            e.target.style.fontSize = "13px"
+            // const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+            // const ind = new_tracker_order.indexOf(key)
+            // new_tracker_order.splice(ind, 1)
+            // // dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+
         }
         function dragEndHandler(e, index) {
             let div;
