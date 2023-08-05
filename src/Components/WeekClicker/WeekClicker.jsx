@@ -12,9 +12,9 @@ export default function WeekClicker() {
     return (
         <section className="WClicker">
             <div className="wc__container">
-                <ChevronLeft onClick={() => { }} size={15} />
+                <ChevronLeft onClick={() => { dispatch({ type: "change_week", payload: { mon_date: new Date(mon_date.getTime() - 7 * ms_in_day) } }) }} size={15} />
                 <h1 className="wc__date">{weekDateText}</h1>
-                <ChevronRight size={15} />
+                <ChevronRight onClick={() => { dispatch({ type: "change_week", payload: { mon_date: new Date(mon_date.getTime() + 7 * ms_in_day) } }) }} size={15} />
             </div>
         </section>
     )
