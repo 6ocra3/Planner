@@ -39,32 +39,29 @@ function List() {
         function dropHandler(e, key) {
             e.preventDefault();
             blankDivRef.current.style.display = "none"
-            const dragTask = e.dataTransfer.getData("key")
         }
-        return (<li key={key} className="list__point">
-            <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
-            <p className={tasks[key].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
-                onDragStart={(e) => startHandler(e, key)}
-                onDragLeave={(e) => dragEndHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, key)}
-                draggable
-            >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p></li>)
+        return (<li key={key}>
+            <div className='top_line'></div>
+            <div className="list__point">
+                <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
+                <p className={tasks[key].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
+                    onDragStart={(e) => startHandler(e, key)}
+                    onDragLeave={(e) => dragEndHandler(e)}
+                    onDragEnd={(e) => dragEndHandler(e)}
+                    onDragOver={(e) => dragOverHandler(e)}
+                    onDrop={(e) => dropHandler(e, key)}
+                    draggable
+                >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
+            </div>
+            <div className='bot_line'></div>
+        </li>)
     }
-
-    function blankListDragOver(e) {
-        e.preventDefault();
-        console.log(e.target.children[0])
-    }
-
     useEffect(() => {
         if (listsRef.current.clientHeight > height) {
             setHeight(listsRef.current.clientHeight)
         }
         setWidth(listsRef.current.clientWidth)
     }, [listsRef.current])
-
     return (
         <div ref={mainListRef}
             onDragEnter={(e) => {

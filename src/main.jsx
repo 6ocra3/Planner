@@ -6,11 +6,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 const backendWork = false
+const today = new Date();
+const dayOfWeek = today.getDay();
+const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+const mondayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + difference);
+mondayDateFormat = mondayDate.toISOString().slice(0, 10)
 let defaultState;
 if (backendWork) {
-  var response = await fetch('http://127.0.0.1:5005/get_week_tasks/2022-07-03');
+  var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateFormat}`);
   const tasks = await response.json();
-  var response = await fetch('http://127.0.0.1:5005/get_week/2022-07-03');
+  var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateFormat}`);
   const week = await response.json();
   defaultState = tasks && week && {
     tasks: tasks,
