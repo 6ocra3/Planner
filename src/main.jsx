@@ -18,6 +18,7 @@ if (backendWork) {
   var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateFormat}`);
   const week = await response.json();
   defaultState = tasks && week && {
+    mon_date: mondayDate,
     tasks: tasks,
     tracker_order: week.tracker_order,
     list_order: week.list_order,
@@ -26,6 +27,7 @@ if (backendWork) {
 }
 else {
   defaultState = {
+    mon_date: mondayDate,
     tasks: {
       1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
