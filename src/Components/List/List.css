@@ -1,3 +1,8 @@
+.list {
+    grid-column: span 1;
+    grid-row: 2 / 3;
+}
+
 .icon {
     /* margin: auto 4px auto 4px;
     box-sizing: border-box;
@@ -6,6 +11,7 @@
     border: solid 1px #343d46; */
     margin: 0 auto;
 }
+
 
 .list__point,
 .list__add {

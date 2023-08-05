@@ -10,7 +10,7 @@ const today = new Date();
 const dayOfWeek = today.getDay();
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 const mondayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + difference);
-mondayDateFormat = mondayDate.toISOString().slice(0, 10)
+const mondayDateFormat = mondayDate.toISOString().slice(0, 10)
 let defaultState;
 if (backendWork) {
   var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateFormat}`);

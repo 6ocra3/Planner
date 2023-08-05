@@ -1,3 +1,8 @@
+    .tracker {
+        grid-column: span 1;
+        grid-row: 2 / 3;
+    }
+
     .task__day {
         box-sizing: border-box;
         width: 20px;

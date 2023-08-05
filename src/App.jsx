@@ -1,6 +1,7 @@
 import './App.css'
 import Tracker from './Components/Tracker/Tracker';
 import List from './Components/List/List';
+import WeekClicker from './Components/WeekClicker/WeekClicker';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 function App() {
@@ -26,6 +27,7 @@ function App() {
       style={{ height: "100vh", width: "100vw", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <div className='body'>
         <div className="App">
+          <WeekClicker />
           <Tracker dragingTask={dragingTask} setDragingTask={setDragingTask} />
           <List />
         </div>
