@@ -47,6 +47,8 @@ const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
+    case "change_week":
+      return { ...state, mon_date: action.payload.mon_date }
     case "change_display":
       fetch('http://127.0.0.1:5005/edit_task_day', {
         method: "PUT",
