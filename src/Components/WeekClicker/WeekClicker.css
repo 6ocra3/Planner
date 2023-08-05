@@ -1,3 +1,21 @@
 .WClicker {
-    grid-column: 1
+
+    grid-column: 1;
+}
+
+.wc__date {
+    font-size: 15px;
+    line-height: 15px;
+    font-weight: normal;
+}
+
+.wc__container * {
+    vertical-align: center;
+}
+
+.wc__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 250px;
 }

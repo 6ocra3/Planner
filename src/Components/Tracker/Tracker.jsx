@@ -171,7 +171,7 @@ function Tracker({ dragingTask, setDragingTask }) {
                         return <div key={value} className="week__day">{value}</div>
                     })}
                 </div>
-                <h1 className="week__header">Список дел</h1>
+                <h2 className="week__header">Список дел</h2>
             </header>
             <div className="tasks">
                 {tasks && tracker_order && tracker_order.map((key, index) => {

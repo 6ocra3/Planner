@@ -77,7 +77,7 @@ function List() {
             }}
             onDrop={(e) => { blankDivRef.current.style.display = "none"; }}
             className="list">
-            <h1 className="list__header">Сделать за неделю</h1>
+            <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
                 {tasks && list_order && list_order.map((v, index) => {
                     return (
