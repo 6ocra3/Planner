@@ -5,12 +5,16 @@ import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-const backendWork = false
+const backendWork = true
 const today = new Date();
 const dayOfWeek = today.getDay();
+console.log(dayOfWeek)
+const ms_in_day = 60 * 60 * 24 * 1000
+const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-const mondayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + difference);
+const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
 const mondayDateFormat = mondayDate.toISOString().slice(0, 10)
+console.log(mondayDateFormat)
 let defaultState;
 if (backendWork) {
   var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateFormat}`);
@@ -48,7 +52,11 @@ const reducer = (state = defaultState, action) => {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
     case "change_week":
-      return { ...state, mon_date: action.payload.mon_date }
+      const new_mon_date = action.payload.mon_date
+      return {
+        ...state, tasks: action.payload.tasks, mon_date: action.payload.mon_date, tracker_order: action.payload.week.tracker_order,
+        list_order: action.payload.week.list_order,
+      }
     case "change_display":
       fetch('http://127.0.0.1:5005/edit_task_day', {
         method: "PUT",
