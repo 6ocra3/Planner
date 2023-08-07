@@ -122,7 +122,9 @@ function Tracker({ dragingTask, setDragingTask }) {
             }
         }
         return (
-            <section key={key} className="task">
+            <section
+                onDrop={(e) => { e.stopPropagation() }}
+                key={key} className="task">
                 <div className="task__days">
                     {days.map((v, index) => {
                         return <div onClick={() => {
