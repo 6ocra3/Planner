@@ -91,6 +91,16 @@ const reducer = (state = defaultState, action) => {
       temp_list_order[action.payload.column].push(action.payload.id)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "change_tracker_order":
+      fetch('http://127.0.0.1:5005/edit_week', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          date: state.mon_date.slice(0, 10),
+          tracker_order: action.payload.new_tracker_order
+        }),
+      })
       const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))
       return { ...state, tracker_order: new_tracker_order }
     case "change_list_order":

@@ -99,6 +99,7 @@ function List() {
             <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
                 {tasks && list_order && list_order.map((v, index) => {
+                    console.log(v)
                     return (
                         <ul
                             onDrop={(e) => {
