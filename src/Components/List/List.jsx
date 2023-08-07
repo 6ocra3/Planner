@@ -45,7 +45,7 @@ function List() {
     function getTask(key) {
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
-            blankDivRef.current.style.display = "block"
+            // blankDivRef.current.style.display = "block"
         }
         function dragEndHandler(e) {
         }
@@ -55,7 +55,7 @@ function List() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            blankDivRef.current.style.display = "none"
+            // blankDivRef.current.style.display = "none"
         }
         if (tasks[key]) {
             return (<li key={key}>
@@ -85,22 +85,40 @@ function List() {
         <div ref={mainListRef}
             onDragEnter={(e) => {
                 e.preventDefault()
-                blankDivRef.current.style.display = "block"
+                // blankDivRef.current.style.display = "block"
             }}
             onDragLeave={(e) => {
                 e.preventDefault()
                 if (!mainListRef.current.contains(e.relatedTarget)) {
-                    blankDivRef.current.style.display = "none";
+                    // blankDivRef.current.style.display = "none";
                 }
 
             }}
-            onDrop={(e) => { blankDivRef.current.style.display = "none"; }}
+            // onDrop={(e) => { blankDivRef.current.style.display = "none"; }}
             className="list">
             <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
                 {tasks && list_order && list_order.map((v, index) => {
                     return (
-                        <ul key={shortid.generate()} ref={listsRef} className='list__ul'>
+                        <ul
+                            onDrop={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                const key = Number(e.dataTransfer.getData("key"))
+                                const new_list_order = JSON.parse(JSON.stringify(list_order))
+                                const updated_list_order = new_list_order.map((subArray) => {
+                                    return subArray.filter((element) => {
+                                        if (Array.isArray(element)) {
+                                            return !element.includes(key);
+                                        }
+                                        return element !== key;
+                                    });
+                                });
+                                updated_list_order[index].push(key)
+                                dispatch({ type: "change_list_order", payload: { new_list_order: updated_list_order } })
+
+                            }}
+                            key={shortid.generate()} ref={listsRef} className='list__ul'>
                             {v.map((key) => {
                                 return (getTask(key))
                             }
@@ -118,7 +136,7 @@ function List() {
                             }
                         </ul>)
                 })}
-                <div
+                {/* <div
                     onDragOver={(e) => {
                         e.preventDefault()
                         blankDivRef.current.children[0].children[1].style.color = "#4f5b66"
@@ -130,6 +148,7 @@ function List() {
                         }
                     }}
                     onDrop={(e) => {
+                        e.preventDefault()
                         e.stopPropagation()
                         blankDivRef.current.style.display = "none";
                         const new_list_order = JSON.parse(JSON.stringify(list_order))
@@ -153,7 +172,7 @@ function List() {
                     <div className="list__add">
                         <Plus className="list__add_icon" color='#4f5b66' size={15}></Plus> <p>Добавить столбец</p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div >
     )
