@@ -59,10 +59,9 @@ function List() {
         }
         if (tasks[key]) {
             return (<li key={key}>
-                <div className='top_line'></div>
                 <div className="list__point">
                     <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
-                    <p className={tasks[key].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
+                    <p className={tasks[key].status != 0 ? "list__point_text task_finished" : "list__point_text "} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
                         onDragStart={(e) => startHandler(e, key)}
                         onDragLeave={(e) => dragEndHandler(e)}
                         onDragEnd={(e) => dragEndHandler(e)}
@@ -71,7 +70,6 @@ function List() {
                         draggable
                     >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
                 </div>
-                <div className='bot_line'></div>
             </li>)
         }
     }

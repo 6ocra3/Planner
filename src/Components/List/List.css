@@ -111,6 +111,11 @@
     outline: none;
 }
 
+.list__point_text {
+    width: 120px;
+    border: none;
+}
+
 .list__blank {
     padding-left: 5px;
     border-left: solid 0.5px #4f5b66;
