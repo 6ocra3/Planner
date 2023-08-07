@@ -85,22 +85,10 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
-      fetch('http://127.0.0.1:5005/create_task', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          date: state.mon_date.slice(0, 10),
-          task: action.payload.task,
-          column: action.payload.col
-        }),
-      })
-      const keys = Object.keys(temp_tasks);
-      const maxKey = Math.max(...keys);
-      const new_task = { task: action.payload.task, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
-      temp_tasks[maxKey + 1] = JSON.parse(JSON.stringify(new_task))
-      temp_list_order[action.payload.col].push(maxKey + 1)
+      const new_task = { task: action.payload.value, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
+      temp_tasks[action.payload.id] = JSON.parse(JSON.stringify(new_task))
+      console.log(temp_list_order[action.payload.column], action.payload.column)
+      temp_list_order[action.payload.column].push(action.payload.id)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "change_tracker_order":
       const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))

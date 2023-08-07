@@ -14,6 +14,7 @@ function List() {
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
+    const mon_date = useSelector(state => state.mon_date)
     const listsRef = useRef()
     const blankDivRef = useRef()
     const mainListRef = useRef()
@@ -21,11 +22,27 @@ function List() {
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
     function createTask(e, index) {
-        dispatch({ type: "create_task", payload: { col: index, task: e.target.value } })
+        const createTaskFetch = () => {
+            return async (dispatch) => {
+                const responseTask = await fetch('http://127.0.0.1:5005/create_task', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date: mon_date.slice(0, 10),
+                        task: e.target.value,
+                        column: index
+                    }),
+                })
+                const task = await responseTask.json();
+                dispatch({ type: "create_task", payload: { id: task.id, column: index, value: e.target.value } })
+            };
+        };
+        dispatch(createTaskFetch())
         setInp(-1)
     }
     function getTask(key) {
-
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
             blankDivRef.current.style.display = "block"
@@ -40,21 +57,23 @@ function List() {
             e.preventDefault();
             blankDivRef.current.style.display = "none"
         }
-        return (<li key={key}>
-            <div className='top_line'></div>
-            <div className="list__point">
-                <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
-                <p className={tasks[key].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
-                    onDragStart={(e) => startHandler(e, key)}
-                    onDragLeave={(e) => dragEndHandler(e)}
-                    onDragEnd={(e) => dragEndHandler(e)}
-                    onDragOver={(e) => dragOverHandler(e)}
-                    onDrop={(e) => dropHandler(e, key)}
-                    draggable
-                >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
-            </div>
-            <div className='bot_line'></div>
-        </li>)
+        if (tasks[key]) {
+            return (<li key={key}>
+                <div className='top_line'></div>
+                <div className="list__point">
+                    <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
+                    <p className={tasks[key].status != 0 ? "task_finished" : ""} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
+                        onDragStart={(e) => startHandler(e, key)}
+                        onDragLeave={(e) => dragEndHandler(e)}
+                        onDragEnd={(e) => dragEndHandler(e)}
+                        onDragOver={(e) => dragOverHandler(e)}
+                        onDrop={(e) => dropHandler(e, key)}
+                        draggable
+                    >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
+                </div>
+                <div className='bot_line'></div>
+            </li>)
+        }
     }
     useEffect(() => {
         if (listsRef.current.clientHeight > height) {

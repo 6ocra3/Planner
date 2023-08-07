@@ -40,16 +40,6 @@ function Tracker({ dragingTask, setDragingTask }) {
     function getTaskSection(el, key, index) {
         const { task, days } = el
         const cs = ["none", "empty", "fill", "arrow"]
-
-        // useEffect(() => {
-        //     if (dragTask) {
-        //         const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-        //         const ind = new_tracker_order.indexOf(key)
-        //         new_tracker_order.splice(ind, 1)
-        //         dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
-        //     }
-        // }, [dragTask])
-
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
             e.target.style.marginLeft = "0"
@@ -173,7 +163,14 @@ function Tracker({ dragingTask, setDragingTask }) {
                 </div>
                 <h2 className="week__header">Список дел</h2>
             </header>
-            <div className="tasks">
+            <div className="tasks"
+                onDrop={(e) => {
+                    e.stopPropagation()
+                    const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+                    const dragTask = Number(e.dataTransfer.getData("key"))
+                    new_tracker_order.push(dragTask)
+                    dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                }}>
                 {tasks && tracker_order && tracker_order.map((key, index) => {
                     return getTaskSection(tasks[key], key, index)
                 })}
