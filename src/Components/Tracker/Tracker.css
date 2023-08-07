@@ -93,7 +93,8 @@
         text-align: left;
         font-size: 13px;
         line-height: 18px;
-        margin-top: 1px
+        margin-top: 1px;
+        width: 130px;
     }
 
     .task:last-of-type div:last-child .task__text {
