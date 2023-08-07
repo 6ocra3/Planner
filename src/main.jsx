@@ -91,7 +91,7 @@ const reducer = (state = defaultState, action) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          date: "2022-07-03",
+          date: state.mon_date.slice(0, 10),
           task: action.payload.task,
           column: action.payload.col
         }),
