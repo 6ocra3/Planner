@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-
+import thunkMiddleware from 'redux-thunk';
 const backendWork = true
 const today = new Date();
 const dayOfWeek = today.getDay();
@@ -52,7 +52,7 @@ const reducer = (state = defaultState, action) => {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
     case "change_week":
-      const new_mon_date = action.payload.mon_date
+      console.log(action.payload.week)
       return {
         ...state, tasks: action.payload.tasks, mon_date: action.payload.mon_date, tracker_order: action.payload.week.tracker_order,
         list_order: action.payload.week.list_order,
@@ -130,7 +130,11 @@ const reducer = (state = defaultState, action) => {
       return state
   }
 }
-const store = configureStore({ reducer: reducer, preloadedState: defaultState })
+const store = configureStore({
+  reducer: reducer,
+  middleware: [...getDefaultMiddleware(), thunkMiddleware],
+  preloadedState: defaultState
+})
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -12,17 +12,50 @@ export default function WeekClicker() {
     return (
         <section className="WClicker">
             <div className="wc__container">
-                <ChevronLeft onClick={async () => {
-                    var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateFormat}`);
-                    const tasks = await response.json();
-                    var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateFormat}`);
-                    const week = await response.json();
-                    dispatch({ type: "change_week", payload: { mon_date: new Date(mon_date.getTime() - 7 * ms_in_day), week: week, tasks: tasks } })
+                <ChevronLeft onClick={() => {
+                    const fetchWeekTasks = () => {
+                        return async (dispatch) => {
+                            console.log("test")
+
+                            const newMondayDate = new Date(mon_date.getTime() - 7 * ms_in_day);
+
+                            const responseTasks = await fetch(`http://127.0.0.1:5005/get_week_tasks/${newMondayDate.toISOString().slice(0, 10)}`);
+                            const tasks = await responseTasks.json();
+
+                            const responseWeek = await fetch(`http://127.0.0.1:5005/get_week/${newMondayDate.toISOString().slice(0, 10)}`);
+                            const week = await responseWeek.json();
+
+                            dispatch({ type: "change_week", payload: { mon_date: newMondayDate, week: week, tasks: tasks } });
+                        };
+                    };
+
+                    dispatch(fetchWeekTasks());
+
+
                 }
                 }
                     size={15} />
                 <h1 className="wc__date">{weekDateText}</h1>
-                <ChevronRight onClick={() => { dispatch({ type: "change_week", payload: { mon_date: new Date(mon_date.getTime() + 7 * ms_in_day) } }) }} size={15} />
+                <ChevronRight onClick={() => {
+                    const fetchWeekTasks = () => {
+                        return async (dispatch) => {
+                            console.log("test")
+
+                            const newMondayDate = new Date(mon_date.getTime() + 7 * ms_in_day);
+
+                            const responseTasks = await fetch(`http://127.0.0.1:5005/get_week_tasks/${newMondayDate.toISOString().slice(0, 10)}`);
+                            const tasks = await responseTasks.json();
+
+                            const responseWeek = await fetch(`http://127.0.0.1:5005/get_week/${newMondayDate.toISOString().slice(0, 10)}`);
+                            const week = await responseWeek.json();
+
+                            dispatch({ type: "change_week", payload: { mon_date: newMondayDate, week: week, tasks: tasks } });
+                        };
+                    };
+
+                    dispatch(fetchWeekTasks());
+
+                }} size={15} />
             </div>
         </section>
     )
