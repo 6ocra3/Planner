@@ -130,6 +130,7 @@ function List() {
                         }
                     }}
                     onDrop={(e) => {
+                        e.stopPropagation()
                         blankDivRef.current.style.display = "none";
                         const new_list_order = JSON.parse(JSON.stringify(list_order))
                         const b = new Array()

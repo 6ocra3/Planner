@@ -168,10 +168,18 @@ function Tracker({ dragingTask, setDragingTask }) {
             <div className="tasks"
                 onDrop={(e) => {
                     e.stopPropagation()
-                    const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
                     const dragTask = Number(e.dataTransfer.getData("key"))
-                    new_tracker_order.push(dragTask)
-                    dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                    if (tracker_order.indexOf(dragTask) == -1) {
+                        const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+                        new_tracker_order.push(dragTask)
+                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                    }
+                    else {
+                        const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
+                        new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
+                        new_tracker_order.push(dragTask)
+                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                    }
                 }}>
                 {tasks && tracker_order && tracker_order.map((key, index) => {
                     return getTaskSection(tasks[key], key, index)
