@@ -13,16 +13,15 @@ const ms_in_day = 60 * 60 * 24 * 1000
 const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
-const mondayDateFormat = mondayDate.toISOString().slice(0, 10)
-console.log(mondayDateFormat)
+const mondayDateF = mondayDate.toISOString()
 let defaultState;
 if (backendWork) {
-  var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateFormat}`);
+  var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateF.slice(0, 10)}`);
   const tasks = await response.json();
-  var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateFormat}`);
+  var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateF.slice(0, 10)}`);
   const week = await response.json();
   defaultState = tasks && week && {
-    mon_date: mondayDate,
+    mon_date: mondayDateF,
     tasks: tasks,
     tracker_order: week.tracker_order,
     list_order: week.list_order,
@@ -31,7 +30,7 @@ if (backendWork) {
 }
 else {
   defaultState = {
-    mon_date: mondayDate,
+    mon_date: mondayDateF,
     tasks: {
       1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
