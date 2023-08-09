@@ -14,18 +14,21 @@ const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
 const mondayDateF = mondayDate.toISOString()
+const backendUrl = backendWork ? "http://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
 let defaultState;
 if (backendWork) {
-  var response = await fetch(`http://127.0.0.1:5005/get_week_tasks/${mondayDateF.slice(0, 10)}`);
+  var response = await fetch(`${backendUrl}/get_week_tasks/${mondayDateF.slice(0, 10)}`);
   const tasks = await response.json();
-  var response = await fetch(`http://127.0.0.1:5005/get_week/${mondayDateF.slice(0, 10)}`);
+  var response = await fetch(`${backendUrl}/get_week/${mondayDateF.slice(0, 10)}`);
   const week = await response.json();
+
   defaultState = tasks && week && {
     mon_date: mondayDateF,
     tasks: tasks,
     tracker_order: week.tracker_order,
     list_order: week.list_order,
-    drag_task: undefined
+    drag_task: undefined,
+    backend_url: backendWork ? "http://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
   }
 }
 else {
@@ -57,7 +60,7 @@ const reducer = (state = defaultState, action) => {
         list_order: action.payload.week.list_order,
       }
     case "change_display":
-      fetch('http://127.0.0.1:5005/edit_task_day', {
+      fetch(`${state.backend_url}/edit_task_day`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +74,7 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "change_status":
-      fetch('http://127.0.0.1:5005/edit_task_status', {
+      fetch(`${state.backend_url}/edit_task_status`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +94,7 @@ const reducer = (state = defaultState, action) => {
       temp_list_order[action.payload.column].push(action.payload.id)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "change_tracker_order":
-      fetch('http://127.0.0.1:5005/edit_week', {
+      fetch(`${state.backend_url}/edit_week`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +107,7 @@ const reducer = (state = defaultState, action) => {
       const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))
       return { ...state, tracker_order: new_tracker_order }
     case "change_list_order":
-      fetch('http://127.0.0.1:5005/edit_week', {
+      fetch(`${state.backend_url}/edit_week`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +123,7 @@ const reducer = (state = defaultState, action) => {
       if (state.tracker_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tracker_order]
         a.push(action.payload.task)
-        fetch('http://127.0.0.1:5005/edit_week', {
+        fetch(`${state.backend_url}/edit_week`, {
           method: "PUT",
           headers: {
             'Content-Type': 'application/json',
