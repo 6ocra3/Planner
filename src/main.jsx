@@ -14,7 +14,7 @@ const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
 const mondayDateF = mondayDate.toISOString()
-const backendUrl = backendWork ? "http://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
+const backendUrl = backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
 let defaultState;
 if (backendWork) {
   var response = await fetch(`${backendUrl}/get_week_tasks/${mondayDateF.slice(0, 10)}`);
