@@ -28,7 +28,7 @@ if (backendWork) {
     tracker_order: week.tracker_order,
     list_order: week.list_order,
     drag_task: undefined,
-    backend_url: backendWork ? "http://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
+    backend_url: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
   }
 }
 else {
