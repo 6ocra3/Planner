@@ -15,7 +15,7 @@ function List() {
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
     const mon_date = useSelector(state => state.mon_date)
-    const backend_url = useSelector(state => state.backend_url)
+    const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
     const blankDivRef = useRef()
     const mainListRef = useRef()
@@ -24,9 +24,9 @@ function List() {
     <FiX className="icon" size={15}></FiX>]
     function createTask(e, index) {
         const createTaskFetch = () => {
-            console.log(backend_url)
+            console.log(backendUrl)
             return async (dispatch) => {
-                const responseTask = await fetch(`${backend_url}/create_task`, {
+                const responseTask = await fetch(`${backendUrl}/create_task`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',

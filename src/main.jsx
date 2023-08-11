@@ -5,7 +5,7 @@ import './index.css'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-const backendWork = true
+const backendWork = false
 const today = new Date();
 const dayOfWeek = today.getDay();
 console.log(dayOfWeek)
@@ -16,36 +16,34 @@ const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
 const mondayDateF = mondayDate.toISOString()
 const backendUrl = backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
 let defaultState;
-if (backendWork) {
-  var response = await fetch(`${backendUrl}/get_week_tasks/${mondayDateF.slice(0, 10)}`);
-  const tasks = await response.json();
-  var response = await fetch(`${backendUrl}/get_week/${mondayDateF.slice(0, 10)}`);
-  const week = await response.json();
+var response = await fetch(`${backendUrl}/get_week_tasks/${mondayDateF.slice(0, 10)}`);
+const tasks = await response.json();
+var response = await fetch(`${backendUrl}/get_week/${mondayDateF.slice(0, 10)}`);
+const week = await response.json();
 
-  defaultState = tasks && week && {
-    mon_date: mondayDateF,
-    tasks: tasks,
-    tracker_order: week.tracker_order,
-    list_order: week.list_order,
-    drag_task: undefined,
-    backend_url: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
-  }
+defaultState = tasks && week && {
+  mon_date: mondayDateF,
+  tasks: tasks,
+  tracker_order: week.tracker_order,
+  list_order: week.list_order,
+  drag_task: undefined,
+  backendUrl: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
 }
-else {
-  defaultState = {
-    mon_date: mondayDateF,
-    tasks: {
-      1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
-      2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
-      3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
-      4: { task: "Hello world 4", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
-      5: { task: "Hello world 5", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
-      6: { task: "Hello world 6", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
-    },
-    tracker_order: [3, 1, 4, 6, 2],
-    list_order: [[1, 3, 5], [2, 4, 6]]
-  }
-}
+// else {
+//   defaultState = {
+//     mon_date: mondayDateF,
+//     tasks: {
+//       1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
+//       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
+//       3: { task: "Hello world 3", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+//       4: { task: "Hello world 4", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+//       5: { task: "Hello world 5", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
+//       6: { task: "Hello world 6", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
+//     },
+//     tracker_order: [3, 1, 4, 6, 2],
+//     list_order: [[1, 3, 5], [2, 4, 6]]
+//   }
+// }
 
 const reducer = (state = defaultState, action) => {
   const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
@@ -60,7 +58,7 @@ const reducer = (state = defaultState, action) => {
         list_order: action.payload.week.list_order,
       }
     case "change_display":
-      fetch(`${state.backend_url}/edit_task_day`, {
+      fetch(`${state.backendUrl}/edit_task_day`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +72,7 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "change_status":
-      fetch(`${state.backend_url}/edit_task_status`, {
+      fetch(`${state.backendUrl}/edit_task_status`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +92,7 @@ const reducer = (state = defaultState, action) => {
       temp_list_order[action.payload.column].push(action.payload.id)
       return { ...state, list_order: temp_list_order, tasks: temp_tasks }
     case "change_tracker_order":
-      fetch(`${state.backend_url}/edit_week`, {
+      fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +105,7 @@ const reducer = (state = defaultState, action) => {
       const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))
       return { ...state, tracker_order: new_tracker_order }
     case "change_list_order":
-      fetch(`${state.backend_url}/edit_week`, {
+      fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +121,7 @@ const reducer = (state = defaultState, action) => {
       if (state.tracker_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tracker_order]
         a.push(action.payload.task)
-        fetch(`${state.backend_url}/edit_week`, {
+        fetch(`${state.backendUrl}/edit_week`, {
           method: "PUT",
           headers: {
             'Content-Type': 'application/json',
