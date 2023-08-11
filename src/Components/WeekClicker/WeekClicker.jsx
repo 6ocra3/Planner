@@ -4,6 +4,7 @@ import './WeekClicker.css'
 import { dateF, dateSlice } from '../../utils/DateFunctions'
 import { MONTHS } from './MONTHS'
 import { ChevronLeft, ChevronRight } from 'react-feather'
+import { fetchWeekNext, fetchWeekprevious } from '../../utils/requests'
 export default function WeekClicker() {
     const dispatch = useDispatch()
     const mondayDate = new Date(useSelector(state => state.mondayDate))
@@ -15,47 +16,12 @@ export default function WeekClicker() {
         <section className="WClicker">
             <div className="wc__container">
                 <ChevronLeft onClick={() => {
-                    const fetchWeekTasks = () => {
-                        return async (dispatch) => {
-
-                            const newMondayDate = new Date(mondayDate.getTime() - 7 * MS_IN_DAY);
-
-                            const responseTasks = await fetch(`${backendUrl}/get_week_tasks/${dateSlice(newMondayDate)}`);
-                            const tasks = await responseTasks.json();
-
-                            const responseWeek = await fetch(`${backendUrl}//get_week/${dateSlice(newMondayDate)}`);
-                            const week = await responseWeek.json();
-
-                            dispatch({ type: "change_week", payload: { mondayDate: dateF(newMondayDate), week: week, tasks: tasks } });
-                        };
-                    };
-
-                    dispatch(fetchWeekTasks());
-
-
-                }
-                }
+                    dispatch(fetchWeekNext(mondayDate));
+                }}
                     size={15} />
                 <h1 className="wc__date">{weekDateText}</h1>
                 <ChevronRight onClick={() => {
-                    const fetchWeekTasks = () => {
-                        return async (dispatch) => {
-
-                            const newMondayDate = new Date(mondayDate.getTime() + 7 * MS_IN_DAY);
-                            const newMondayDateF = newMondayDate.toISOString()
-
-                            const responseTasks = await fetch(`${backendUrl}//get_week_tasks/${newMondayDateF.slice(0, 10)}`);
-                            const tasks = await responseTasks.json();
-
-                            const responseWeek = await fetch(`${backendUrl}//get_week/${newMondayDateF.slice(0, 10)}`);
-                            const week = await responseWeek.json();
-
-                            dispatch({ type: "change_week", payload: { mondayDate: newMondayDateF, week: week, tasks: tasks } });
-                        };
-                    };
-
-                    dispatch(fetchWeekTasks());
-
+                    dispatch(fetchWeekprevious(mondayDate))
                 }} size={15} />
             </div>
         </section>

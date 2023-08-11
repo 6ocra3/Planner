@@ -52,7 +52,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, drag_task: action.payload.key }
     case "change_week":
       return {
-        ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, trackerOrder: action.payload.week.trackerOrder,
+        ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, trackerOrder: action.payload.week.tracker_order,
         listOrder: action.payload.week.list_order,
       }
     case "change_display":
@@ -91,6 +91,7 @@ const reducer = (state = defaultState, action) => {
         list_order: action.payload.newListOrder
       }
       fetchChangeListOrder(body)
+
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
       return { ...state, listOrder: newListOrder }
     default:
