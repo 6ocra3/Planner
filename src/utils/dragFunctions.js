@@ -108,3 +108,19 @@ export function dragDropTrackerTask(e, key, index, trackerOrder, dispatch) {
         dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
     }
 }
+
+export function dragDropTrackerTasks(e, trackerOrder, dispatch) {
+    e.stopPropagation()
+    const dragTask = Number(e.dataTransfer.getData("key"))
+    if (trackerOrder.indexOf(dragTask) == -1) {
+        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+        newTrackerOrder.push(dragTask)
+        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
+    }
+    else {
+        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+        newTrackerOrder.splice(newTrackerOrder.indexOf(dragTask), 1)
+        newTrackerOrder.push(dragTask)
+        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
+    }
+}

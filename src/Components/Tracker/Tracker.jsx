@@ -3,7 +3,7 @@ import './Tracker.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
-import { dragDropTrackerTask, dragEndTrackerTask, dragOverTrackerTask, dragStartTrackerTask } from '../../utils/dragFunctions';
+import { dragDropTrackerTask, dragDropTrackerTasks, dragEndTrackerTask, dragOverTrackerTask, dragStartTrackerTask } from '../../utils/dragFunctions';
 
 function Tracker() {
     const dispatch = useDispatch()
@@ -52,21 +52,7 @@ function Tracker() {
                 <h2 className="week__header">Список дел</h2>
             </header>
             <div className="tasks"
-                onDrop={(e) => {
-                    e.stopPropagation()
-                    const dragTask = Number(e.dataTransfer.getData("key"))
-                    if (trackerOrder.indexOf(dragTask) == -1) {
-                        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
-                        newTrackerOrder.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
-                    }
-                    else {
-                        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
-                        newTrackerOrder.splice(newTrackerOrder.indexOf(dragTask), 1)
-                        newTrackerOrder.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
-                    }
-                }}>
+                onDrop={(e) => dragDropTrackerTasks(e, trackerOrder, dispatch)}>
                 {tasks && trackerOrder && trackerOrder.map((key, index) => {
                     return getTaskSection(tasks[key], key, index)
                 })}
