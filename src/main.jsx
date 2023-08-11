@@ -99,11 +99,11 @@ const reducer = (state = defaultState, action) => {
         },
         body: JSON.stringify({
           date: state.mondayDate.slice(0, 10),
-          tracker_order: action.payload.new_tracker_order
+          tracker_order: action.payload.newTrackerOrder
         }),
       })
-      const new_tracker_order = JSON.parse(JSON.stringify(action.payload.new_tracker_order))
-      return { ...state, tracker_order: new_tracker_order }
+      const newTrackerOrder = JSON.parse(JSON.stringify(action.payload.newTrackerOrder))
+      return { ...state, tracker_order: newTrackerOrder }
     case "change_list_order":
       fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",

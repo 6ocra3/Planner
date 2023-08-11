@@ -8,17 +8,17 @@ function App() {
   const [dragingTask, setDragingTask] = useState()
   const appRef = useRef()
   const dispatch = useDispatch()
-  const tracker_order = useSelector(state => state.tracker_order)
+  const trackerOrder = useSelector(state => state.tracker_order)
   function dropHandler(e) {
     e.preventDefault()
 
     const key = Number(e.dataTransfer.getData("key"))
-    const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-    console.log(new_tracker_order)
-    const ind = new_tracker_order.indexOf(key)
-    new_tracker_order.splice(ind, 1)
-    console.log(new_tracker_order)
-    dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+    const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+    console.log(newTrackerOrder)
+    const ind = newTrackerOrder.indexOf(key)
+    newTrackerOrder.splice(ind, 1)
+    console.log(newTrackerOrder)
+    dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
   }
   return (
     <div

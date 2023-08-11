@@ -106,7 +106,7 @@ function Tracker({ dragingTask, setDragingTask }) {
                 else {
                     newTrackerOrder.splice(ind + 1, 0, dragTask)
                 }
-                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
+                dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
             }
             else if (dragTask && key != dragTask) {
                 const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
@@ -118,7 +118,7 @@ function Tracker({ dragingTask, setDragingTask }) {
                 else {
                     newTrackerOrder.splice(ind + 1, 0, dragTask)
                 }
-                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
+                dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
             }
         }
         return (
@@ -172,13 +172,13 @@ function Tracker({ dragingTask, setDragingTask }) {
                     if (trackerOrder.indexOf(dragTask) == -1) {
                         const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
                         newTrackerOrder.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
+                        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
                     }
                     else {
                         const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
                         newTrackerOrder.splice(newTrackerOrder.indexOf(dragTask), 1)
                         newTrackerOrder.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
+                        dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
                     }
                 }}>
                 {tasks && trackerOrder && trackerOrder.map((key, index) => {
