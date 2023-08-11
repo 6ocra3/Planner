@@ -11,7 +11,6 @@ function App() {
   const trackerOrder = useSelector(state => state.trackerOrder)
   function dropHandler(e) {
     e.preventDefault()
-
     const key = Number(e.dataTransfer.getData("key"))
     const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
     const ind = newTrackerOrder.indexOf(key)

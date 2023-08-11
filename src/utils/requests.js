@@ -71,3 +71,21 @@ export function fetchWeekprevious(mondayDate) {
         dispatch({ type: "change_week", payload: { mondayDate: newMondayDateF, week: week, tasks: tasks } });
     };
 }
+
+export function fetchCreateTask(mondayDate, e, index) {
+    return async (dispatch) => {
+        const responseTask = await fetch(`${backendUrl}/create_task`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                date: dateSlice(mondayDate),
+                task: e.target.value,
+                column: index
+            }),
+        })
+        const task = await responseTask.json();
+        dispatch({ type: "create_task", payload: { id: task.id, column: index, value: e.target.value } })
+    };
+}

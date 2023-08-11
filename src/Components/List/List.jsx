@@ -7,6 +7,7 @@ import { Check } from 'react-feather';
 import { FiX } from "react-icons/fi";
 import { FiCheck } from "react-icons/fi";
 import { dragDropListUl, dragStartListTask } from '../../utils/dragFunctions';
+import { fetchCreateTask } from '../../utils/requests';
 
 function List() {
     const dispatch = useDispatch()
@@ -14,33 +15,15 @@ function List() {
     const tasks = useSelector(state => state.tasks)
     const listOrder = useSelector(state => state.listOrder)
     const trackerOrder = useSelector(state => state.trackerOrder)
-    const mondayDate = useSelector(state => state.mondayDate)
+    const mondayDate = new Date(useSelector(state => state.mondayDate))
     const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
-    const blankDivRef = useRef()
     const mainListRef = useRef()
     const icons = [<></>,
     <FiCheck className="icon" size={15}></FiCheck>,
     <FiX className="icon" size={15}></FiX>]
     function createTask(e, index) {
-        const createTaskFetch = () => {
-            return async (dispatch) => {
-                const responseTask = await fetch(`${backendUrl}/create_task`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        date: mondayDate.slice(0, 10),
-                        task: e.target.value,
-                        column: index
-                    }),
-                })
-                const task = await responseTask.json();
-                dispatch({ type: "create_task", payload: { id: task.id, column: index, value: e.target.value } })
-            };
-        };
-        dispatch(createTaskFetch())
+        dispatch(fetchCreateTask(mondayDate, e, index))
         setInp(-1)
     }
     function getTask(key) {
