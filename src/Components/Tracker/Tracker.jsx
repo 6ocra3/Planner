@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 function Tracker({ dragingTask, setDragingTask }) {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
-    const tracker_order = useSelector(state => state.tracker_order)
+    const trackerOrder = useSelector(state => state.tracker_order)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(div, index) {
         if (index == 0) {
             div.classList.add("top")
             div.parentElement.nextElementSibling.children[1].classList.remove('top')
         }
-        else if (index == tracker_order.length - 1) {
+        else if (index == trackerOrder.length - 1) {
             div.classList.remove("bot")
             div.classList.add("top")
         }
@@ -29,7 +29,7 @@ function Tracker({ dragingTask, setDragingTask }) {
         if (index == 0) {
             div.parentElement.nextElementSibling.children[1].classList.add('top')
         }
-        else if (index == tracker_order.length - 1) {
+        else if (index == trackerOrder.length - 1) {
             div.classList.remove("top")
             div.classList.add("bot")
         }
@@ -54,9 +54,9 @@ function Tracker({ dragingTask, setDragingTask }) {
             else {
                 div = e.target.parentElement
             }
-            if (!div.contains(e.relatedTarget) && e.relatedTarget?.classList[0] != "top_line" && (e.relatedTarget?.classList[0] != undefined || index == tracker_order.length - 1)) {
+            if (!div.contains(e.relatedTarget) && e.relatedTarget?.classList[0] != "top_line" && (e.relatedTarget?.classList[0] != undefined || index == trackerOrder.length - 1)) {
                 div.classList.remove("top")
-                if (index == tracker_order.length - 1) {
+                if (index == trackerOrder.length - 1) {
                     div.classList.remove("bot")
                 }
                 else {
@@ -90,35 +90,35 @@ function Tracker({ dragingTask, setDragingTask }) {
                 div = e.target.parentElement
             }
             div.classList.remove("top")
-            if (index == tracker_order.length - 1) {
+            if (index == trackerOrder.length - 1) {
                 div.classList.remove("bot")
             }
             else {
                 div.parentElement.nextElementSibling.children[1].classList.remove("top")
             }
             const dragTask = Number(e.dataTransfer.getData("key"))
-            if (tracker_order.indexOf(dragTask) == -1) {
-                const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-                const ind = new_tracker_order.indexOf(key)
+            if (trackerOrder.indexOf(dragTask) == -1) {
+                const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+                const ind = newTrackerOrder.indexOf(key)
                 if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
-                    new_tracker_order.splice(ind, 0, dragTask)
+                    newTrackerOrder.splice(ind, 0, dragTask)
                 }
                 else {
-                    new_tracker_order.splice(ind + 1, 0, dragTask)
+                    newTrackerOrder.splice(ind + 1, 0, dragTask)
                 }
-                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
             }
             else if (dragTask && key != dragTask) {
-                const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-                new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
-                const ind = new_tracker_order.indexOf(key)
+                const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+                newTrackerOrder.splice(newTrackerOrder.indexOf(dragTask), 1)
+                const ind = newTrackerOrder.indexOf(key)
                 if ((e.clientY - div.getBoundingClientRect().y) < (div.getBoundingClientRect().y + 20 - e.clientY)) {
-                    new_tracker_order.splice(ind, 0, dragTask)
+                    newTrackerOrder.splice(ind, 0, dragTask)
                 }
                 else {
-                    new_tracker_order.splice(ind + 1, 0, dragTask)
+                    newTrackerOrder.splice(ind + 1, 0, dragTask)
                 }
-                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
             }
         }
         return (
@@ -149,7 +149,7 @@ function Tracker({ dragingTask, setDragingTask }) {
                         onDragStart={(e) => startHandler(e, key)}
                         draggable>{task}</h4>
 
-                    {index == (tracker_order.length - 1) && <div className='bot_line'></div>}
+                    {index == (trackerOrder.length - 1) && <div className='bot_line'></div>}
                 </div>
             </section>
         )
@@ -169,19 +169,19 @@ function Tracker({ dragingTask, setDragingTask }) {
                 onDrop={(e) => {
                     e.stopPropagation()
                     const dragTask = Number(e.dataTransfer.getData("key"))
-                    if (tracker_order.indexOf(dragTask) == -1) {
-                        const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-                        new_tracker_order.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                    if (trackerOrder.indexOf(dragTask) == -1) {
+                        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+                        newTrackerOrder.push(dragTask)
+                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
                     }
                     else {
-                        const new_tracker_order = JSON.parse(JSON.stringify(tracker_order))
-                        new_tracker_order.splice(new_tracker_order.indexOf(dragTask), 1)
-                        new_tracker_order.push(dragTask)
-                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: new_tracker_order } })
+                        const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+                        newTrackerOrder.splice(newTrackerOrder.indexOf(dragTask), 1)
+                        newTrackerOrder.push(dragTask)
+                        dispatch({ type: "change_tracker_order", payload: { new_tracker_order: newTrackerOrder } })
                     }
                 }}>
-                {tasks && tracker_order && tracker_order.map((key, index) => {
+                {tasks && trackerOrder && trackerOrder.map((key, index) => {
                     return getTaskSection(tasks[key], key, index)
                 })}
             </div>
