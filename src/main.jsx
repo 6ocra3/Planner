@@ -5,7 +5,7 @@ import './index.css'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { dateF, dateSlice } from './utils/DateFunctions.js';
-import { changeDayValue } from './utils/requests.js';
+import { fetchChangeDayValue, fetchChangeListOrder, fetchChangeStatus, fetchChangeTrackerOrder } from './utils/requests.js';
 import thunkMiddleware from 'redux-thunk';
 const backendWork = false
 const today = new Date();
@@ -56,34 +56,20 @@ const reducer = (state = defaultState, action) => {
         listOrder: action.payload.week.list_order,
       }
     case "change_display":
-      const body = {
+      var body = {
         task_id: action.payload.task,
         day: action.payload.day,
         value: (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       }
-      changeDayValue(body)
-      // fetch(`${state.backendUrl}/edit_task_day`, {
-      //   method: "PUT",
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-
-      //   }),
-      // })
+      fetchChangeDayValue(body)
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
     case "change_status":
-      fetch(`${state.backendUrl}/edit_task_status`, {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          task_id: action.payload.task,
-          status: (temp_tasks[action.payload.task].status + 1) % 3
-        }),
-      })
+      var body = {
+        task_id: action.payload.task,
+        status: (temp_tasks[action.payload.task].status + 1) % 3
+      }
+      fetchChangeStatus(body)
       temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
@@ -92,29 +78,19 @@ const reducer = (state = defaultState, action) => {
       tempListOrder[action.payload.column].push(action.payload.id)
       return { ...state, listOrder: tempListOrder, tasks: temp_tasks }
     case "change_tracker_order":
-      fetch(`${state.backendUrl}/edit_week`, {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          date: state.mondayDate.slice(0, 10),
-          tracker_order: action.payload.newTrackerOrder
-        }),
-      })
+      var body = {
+        date: state.mondayDate.slice(0, 10),
+        tracker_order: action.payload.newTrackerOrder
+      }
+      fetchChangeTrackerOrder(body)
       const newTrackerOrder = JSON.parse(JSON.stringify(action.payload.newTrackerOrder))
       return { ...state, trackerOrder: newTrackerOrder }
     case "change_list_order":
-      fetch(`${state.backendUrl}/edit_week`, {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          date: state.mondayDate.slice(0, 10),
-          list_order: action.payload.newListOrder
-        }),
-      })
+      var body = {
+        date: state.mondayDate.slice(0, 10),
+        list_order: action.payload.newListOrder
+      }
+      fetchChangeListOrder(body)
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
       return { ...state, listOrder: newListOrder }
     case "add_to_tr":
