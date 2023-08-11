@@ -3,48 +3,24 @@ import { Plus } from 'react-feather'
 import './List.css'
 import shortid from 'shortid';
 import { useDispatch, useSelector } from 'react-redux'
-import { Check } from 'react-feather';
-import { FiX } from "react-icons/fi";
-import { FiCheck } from "react-icons/fi";
+
+
 import { dragDropListUl, dragStartListTask } from '../../utils/dragFunctions';
 import { fetchCreateTask } from '../../utils/requests';
+import ListTask from '../ListTask/ListTask';
 
 function List() {
     const dispatch = useDispatch()
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const listOrder = useSelector(state => state.listOrder)
-    const trackerOrder = useSelector(state => state.trackerOrder)
     const mondayDate = new Date(useSelector(state => state.mondayDate))
-    const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
     const mainListRef = useRef()
-    const icons = [<></>,
-    <FiCheck className="icon" size={15}></FiCheck>,
-    <FiX className="icon" size={15}></FiX>]
+
     function createTask(e, index) {
         dispatch(fetchCreateTask(mondayDate, e, index))
         setInp(-1)
-    }
-    function getTask(key) {
-        if (tasks[key]) {
-            return (<li key={key}>
-                <div className="list__point">
-                    <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
-                    <p className={tasks[key].status != 0 ? "list__point_text task_finished" : "list__point_text "}
-                        onClick={() => {
-                            if (trackerOrder.indexOf(key) == -1) {
-                                const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
-                                newTrackerOrder.push(key)
-                                dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
-                            }
-                        }}
-                        onDragStart={(e) => dragStartListTask(e, key)}
-                        draggable
-                    >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
-                </div>
-            </li>)
-        }
     }
     return (
         <div ref={mainListRef}
@@ -57,7 +33,7 @@ function List() {
                             onDrop={(e) => dragDropListUl(e, index, listOrder, dispatch)}
                             key={shortid.generate()} ref={listsRef} className='list__ul'>
                             {v.map((key) => {
-                                return (getTask(key))
+                                return <ListTask key={key} keyId={key}></ListTask>
                             }
                             )}
                             {inp == index ? <li className="list__point">
