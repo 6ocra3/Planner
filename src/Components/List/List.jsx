@@ -9,8 +9,6 @@ import { FiCheck } from "react-icons/fi";
 
 function List() {
     const dispatch = useDispatch()
-    const [height, setHeight] = useState(0)
-    const [width, setWidth] = useState(0)
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const listOrder = useSelector(state => state.listOrder)
@@ -47,7 +45,6 @@ function List() {
     function getTask(key) {
         function startHandler(e, key) {
             e.dataTransfer.setData("key", key)
-            // blankDivRef.current.style.display = "block"
         }
         function dragEndHandler(e) {
         }
@@ -57,7 +54,6 @@ function List() {
         }
         function dropHandler(e, key) {
             e.preventDefault();
-            // blankDivRef.current.style.display = "none"
         }
         if (tasks[key]) {
             return (<li key={key}>
@@ -82,26 +78,8 @@ function List() {
             </li>)
         }
     }
-    useEffect(() => {
-        if (listsRef.current.clientHeight > height) {
-            setHeight(listsRef.current.clientHeight)
-        }
-        setWidth(listsRef.current.clientWidth)
-    }, [listsRef.current])
     return (
         <div ref={mainListRef}
-            onDragEnter={(e) => {
-                e.preventDefault()
-                // blankDivRef.current.style.display = "block"
-            }}
-            onDragLeave={(e) => {
-                e.preventDefault()
-                if (!mainListRef.current.contains(e.relatedTarget)) {
-                    // blankDivRef.current.style.display = "none";
-                }
-
-            }}
-            // onDrop={(e) => { blankDivRef.current.style.display = "none"; }}
             className="list">
             <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
@@ -133,8 +111,8 @@ function List() {
                             {inp == index ? <li className="list__point">
                                 <div className="list__point_square"></div>
                                 <input className="list__input" autoFocus={true}
-                                    onBlur={(e) => { e.target.value !== "" && createTask(e, index) }}
-                                    onKeyUp={(e) => { e.key == "Enter" && (e.target.value === "" ? e.target.focus() : createTask(e, index)) }}></input>
+                                    onBlur={(e) => { e.target.value === "" ? setInp(-1) : createTask(e, index) }}
+                                    onKeyUp={(e) => { e.key == "Enter" && (e.target.value === "" ? setInp(-1) : createTask(e, index)) }}></input>
                             </li>
                                 :
                                 <li className="list__add" onClick={() => {
@@ -143,49 +121,8 @@ function List() {
                             }
                         </ul>)
                 })}
-                {/* <div
-                    onDragOver={(e) => {
-                        e.preventDefault()
-                        blankDivRef.current.children[0].children[1].style.color = "#4f5b66"
-                    }}
-                    onDragLeave={(e) => {
-                        e.preventDefault()
-                        if (!blankDivRef.current.contains(e.relatedTarget)) {
-                            blankDivRef.current.children[0].children[1].style.color = "#c0c5ce"
-                        }
-                    }}
-                    onDrop={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        blankDivRef.current.style.display = "none";
-                        const newListOrder = JSON.parse(JSON.stringify(listOrder))
-                        const b = new Array()
-                        const key = Number(e.dataTransfer.getData("key"))
-                        b.push(key)
-                        const updatedListOrder = newListOrder.map((subArray) => {
-                            return subArray.filter((element) => {
-                                if (Array.isArray(element)) {
-                                    return !element.includes(key);
-                                }
-                                return element !== key;
-                            });
-                        });§
-                        updatedListOrder.push(b)
-                        dispatch({ type: "change_list_order", payload: { newListOrder: updatedListOrder } })
-                    }}
-                    className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>
-                    <div className="list__add">
-                        <Plus className="list__add_icon" color='#4f5b66' size={15}></Plus> <p>Добавить столбец</p>
-                    </div>
-                </div> */}
             </div>
         </div >
     )
 }
-// style={{
-//     height: Math.max(...[...listsRef.current.children].reduce((accumulator, item) => {
-//         accumulator.push(Number(item.clientHeight))
-//         return accumulator
-//     }, [])) + "px"
-// }}
 export default List
