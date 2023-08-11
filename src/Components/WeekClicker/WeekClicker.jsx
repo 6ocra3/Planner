@@ -1,14 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './WeekClicker.css'
-import { dateF, dateSlice } from '../../utils/DateFunctions'
 import { MONTHS } from './MONTHS'
 import { ChevronLeft, ChevronRight } from 'react-feather'
 import { fetchWeekNext, fetchWeekprevious } from '../../utils/requests'
 export default function WeekClicker() {
     const dispatch = useDispatch()
     const mondayDate = new Date(useSelector(state => state.mondayDate))
-    const backendUrl = useSelector(state => state.backendUrl)
     const MS_IN_DAY = 60 * 60 * 24 * 1000
     const sundayDate = new Date(mondayDate.getTime() + 6 * MS_IN_DAY)
     const weekDateText = `${mondayDate.getDate()} ${MONTHS[mondayDate.getMonth()]} — ${sundayDate.getDate()} ${MONTHS[sundayDate.getMonth()]}`
