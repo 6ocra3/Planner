@@ -124,3 +124,24 @@ export function dragDropTrackerTasks(e, trackerOrder, dispatch) {
         dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
     }
 }
+
+export function dragDropListUl(e, index, listOrder, dispatch) {
+    e.preventDefault()
+    e.stopPropagation()
+    const key = Number(e.dataTransfer.getData("key"))
+    const newListOrder = JSON.parse(JSON.stringify(listOrder))
+    const updatedListOrder = newListOrder.map((subArray) => {
+        return subArray.filter((element) => {
+            if (Array.isArray(element)) {
+                return !element.includes(key);
+            }
+            return element !== key;
+        });
+    });
+    updatedListOrder[index].push(key)
+    dispatch({ type: "change_list_order", payload: { newListOrder: updatedListOrder } })
+}
+
+export function dragStartListTask(e, key) {
+    e.dataTransfer.setData("key", key)
+}

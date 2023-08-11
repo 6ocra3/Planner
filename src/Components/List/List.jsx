@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Check } from 'react-feather';
 import { FiX } from "react-icons/fi";
 import { FiCheck } from "react-icons/fi";
+import { dragDropListUl, dragStartListTask } from '../../utils/dragFunctions';
 
 function List() {
     const dispatch = useDispatch()
@@ -43,18 +44,6 @@ function List() {
         setInp(-1)
     }
     function getTask(key) {
-        function startHandler(e, key) {
-            e.dataTransfer.setData("key", key)
-        }
-        function dragEndHandler(e) {
-        }
-        function dragOverHandler(e) {
-            e.preventDefault();
-
-        }
-        function dropHandler(e, key) {
-            e.preventDefault();
-        }
         if (tasks[key]) {
             return (<li key={key}>
                 <div className="list__point">
@@ -67,11 +56,7 @@ function List() {
                                 dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
                             }
                         }}
-                        onDragStart={(e) => startHandler(e, key)}
-                        onDragLeave={(e) => dragEndHandler(e)}
-                        onDragEnd={(e) => dragEndHandler(e)}
-                        onDragOver={(e) => dragOverHandler(e)}
-                        onDrop={(e) => dropHandler(e, key)}
+                        onDragStart={(e) => dragStartListTask(e, key)}
                         draggable
                     >{tasks[key].task.length > 20 ? tasks[key].task.slice(0, 18) + "..." : tasks[key].task}</p>
                 </div>
@@ -86,23 +71,7 @@ function List() {
                 {tasks && listOrder && listOrder.map((v, index) => {
                     return (
                         <ul
-                            onDrop={(e) => {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                const key = Number(e.dataTransfer.getData("key"))
-                                const newListOrder = JSON.parse(JSON.stringify(listOrder))
-                                const updatedListOrder = newListOrder.map((subArray) => {
-                                    return subArray.filter((element) => {
-                                        if (Array.isArray(element)) {
-                                            return !element.includes(key);
-                                        }
-                                        return element !== key;
-                                    });
-                                });
-                                updatedListOrder[index].push(key)
-                                dispatch({ type: "change_list_order", payload: { newListOrder: updatedListOrder } })
-
-                            }}
+                            onDrop={(e) => dragDropListUl(e, index, listOrder, dispatch)}
                             key={shortid.generate()} ref={listsRef} className='list__ul'>
                             {v.map((key) => {
                                 return (getTask(key))
