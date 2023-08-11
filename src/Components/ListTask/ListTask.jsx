@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { dragStartListTask } from '../../utils/dragFunctions'
 import { FiCheck } from "react-icons/fi";
-import { Check } from 'react-feather';
 import { FiX } from "react-icons/fi";
 function ListTask({ keyId }) {
     const dispatch = useDispatch()

@@ -145,3 +145,12 @@ export function dragDropListUl(e, index, listOrder, dispatch) {
 export function dragStartListTask(e, key) {
     e.dataTransfer.setData("key", key)
 }
+
+export function dragDropApp(e, trackerOrder, dispatch) {
+    e.preventDefault()
+    const key = Number(e.dataTransfer.getData("key"))
+    const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+    const ind = newTrackerOrder.indexOf(key)
+    newTrackerOrder.splice(ind, 1)
+    dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
+}

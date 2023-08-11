@@ -4,23 +4,15 @@ import List from './Components/List/List';
 import WeekClicker from './Components/WeekClicker/WeekClicker';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { dragDropApp } from './utils/dragFunctions';
 function App() {
   const [dragingTask, setDragingTask] = useState()
-  const appRef = useRef()
   const dispatch = useDispatch()
   const trackerOrder = useSelector(state => state.trackerOrder)
-  function dropHandler(e) {
-    e.preventDefault()
-    const key = Number(e.dataTransfer.getData("key"))
-    const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
-    const ind = newTrackerOrder.indexOf(key)
-    newTrackerOrder.splice(ind, 1)
-    dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
-  }
   return (
     <div
       onDragOver={(e) => { e.preventDefault(); }}
-      onDrop={(e) => dropHandler(e)}
+      onDrop={(e) => dragDropApp(e, trackerOrder, dispatch)}
       style={{ height: "100vh", width: "100vw", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <div className='body'>
         <div className="App">
