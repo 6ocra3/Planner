@@ -24,7 +24,7 @@ const week = await response.json();
 defaultState = tasks && week && {
   mondayDate: mondayDateF,
   tasks: tasks,
-  tracker_order: week.tracker_order,
+  trackerOrder: week.tracker_order,
   list_order: week.list_order,
   drag_task: undefined,
   backendUrl: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
@@ -40,7 +40,7 @@ defaultState = tasks && week && {
 //       5: { task: "Hello world 5", status: 0, days: [0, 0, 0, 0, 1, 2, 1] },
 //       6: { task: "Hello world 6", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
 //     },
-//     tracker_order: [3, 1, 4, 6, 2],
+//     trackerOrder: [3, 1, 4, 6, 2],
 //     list_order: [[1, 3, 5], [2, 4, 6]]
 //   }
 // }
@@ -54,7 +54,7 @@ const reducer = (state = defaultState, action) => {
     case "change_week":
       console.log(action.payload.week)
       return {
-        ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, tracker_order: action.payload.week.tracker_order,
+        ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, trackerOrder: action.payload.week.trackerOrder,
         list_order: action.payload.week.list_order,
       }
     case "change_display":
@@ -103,7 +103,7 @@ const reducer = (state = defaultState, action) => {
         }),
       })
       const newTrackerOrder = JSON.parse(JSON.stringify(action.payload.newTrackerOrder))
-      return { ...state, tracker_order: newTrackerOrder }
+      return { ...state, trackerOrder: newTrackerOrder }
     case "change_list_order":
       fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",
@@ -118,8 +118,8 @@ const reducer = (state = defaultState, action) => {
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
       return { ...state, list_order: newListOrder }
     case "add_to_tr":
-      if (state.tracker_order.indexOf(action.payload.task) == -1) {
-        const a = [...state.tracker_order]
+      if (state.trackerOrder.indexOf(action.payload.task) == -1) {
+        const a = [...state.trackerOrder]
         a.push(action.payload.task)
         fetch(`${state.backendUrl}/edit_week`, {
           method: "PUT",
@@ -131,7 +131,7 @@ const reducer = (state = defaultState, action) => {
             tracker_order: a,
           }),
         })
-        return { ...state, tracker_order: a }
+        return { ...state, trackerOrder: a }
       }
       return state
     default:

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 function Tracker({ dragingTask, setDragingTask }) {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
-    const trackerOrder = useSelector(state => state.tracker_order)
+    const trackerOrder = useSelector(state => state.trackerOrder)
     const head = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     function Top(div, index) {
         if (index == 0) {

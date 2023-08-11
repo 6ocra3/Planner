@@ -8,7 +8,7 @@ function App() {
   const [dragingTask, setDragingTask] = useState()
   const appRef = useRef()
   const dispatch = useDispatch()
-  const trackerOrder = useSelector(state => state.tracker_order)
+  const trackerOrder = useSelector(state => state.trackerOrder)
   function dropHandler(e) {
     e.preventDefault()
 
