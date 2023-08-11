@@ -9,10 +9,10 @@ const backendWork = false
 const today = new Date();
 const dayOfWeek = today.getDay();
 console.log(dayOfWeek)
-const ms_in_day = 60 * 60 * 24 * 1000
+const MS_IN_DAY = 60 * 60 * 24 * 1000
 const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-const mondayDate = new Date(today.getTime() - test[dayOfWeek] * ms_in_day);
+const mondayDate = new Date(today.getTime() - test[dayOfWeek] * MS_IN_DAY);
 const mondayDateF = mondayDate.toISOString()
 const backendUrl = backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
 let defaultState;

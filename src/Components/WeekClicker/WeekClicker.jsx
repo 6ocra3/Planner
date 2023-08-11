@@ -7,9 +7,9 @@ export default function WeekClicker() {
     const dispatch = useDispatch()
     const mondayDate = new Date(useSelector(state => state.mondayDate))
     const backendUrl = useSelector(state => state.backendUrl)
-    const ms_in_day = 60 * 60 * 24 * 1000
-    const sun_date = new Date(mondayDate.getTime() + 6 * ms_in_day)
-    const weekDateText = `${mondayDate.getDate()} ${MONTHS[mondayDate.getMonth()]} — ${sun_date.getDate()} ${MONTHS[sun_date.getMonth()]}`
+    const MS_IN_DAY = 60 * 60 * 24 * 1000
+    const sundayDate = new Date(mondayDate.getTime() + 6 * MS_IN_DAY)
+    const weekDateText = `${mondayDate.getDate()} ${MONTHS[mondayDate.getMonth()]} — ${sundayDate.getDate()} ${MONTHS[sundayDate.getMonth()]}`
     return (
         <section className="WClicker">
             <div className="wc__container">
@@ -18,7 +18,7 @@ export default function WeekClicker() {
                         return async (dispatch) => {
                             console.log("test")
 
-                            const newMondayDate = new Date(mondayDate.getTime() - 7 * ms_in_day);
+                            const newMondayDate = new Date(mondayDate.getTime() - 7 * MS_IN_DAY);
                             const newMondayDateF = newMondayDate.toISOString()
 
                             const responseTasks = await fetch(`${backendUrl}/get_week_tasks/${newMondayDateF.slice(0, 10)}`);
@@ -43,7 +43,7 @@ export default function WeekClicker() {
                         return async (dispatch) => {
                             console.log("test")
 
-                            const newMondayDate = new Date(mondayDate.getTime() + 7 * ms_in_day);
+                            const newMondayDate = new Date(mondayDate.getTime() + 7 * MS_IN_DAY);
                             const newMondayDateF = newMondayDate.toISOString()
 
                             const responseTasks = await fetch(`${backendUrl}//get_week_tasks/${newMondayDateF.slice(0, 10)}`);
