@@ -22,7 +22,7 @@ var response = await fetch(`${backendUrl}/get_week/${mondayDateF.slice(0, 10)}`)
 const week = await response.json();
 
 defaultState = tasks && week && {
-  mon_date: mondayDateF,
+  mondayDate: mondayDateF,
   tasks: tasks,
   tracker_order: week.tracker_order,
   list_order: week.list_order,
@@ -31,7 +31,7 @@ defaultState = tasks && week && {
 }
 // else {
 //   defaultState = {
-//     mon_date: mondayDateF,
+//     mondayDate: mondayDateF,
 //     tasks: {
 //       1: { task: "Hello world 1", status: 2, days: [1, 1, 1, 0, 0, 0, 0] },
 //       2: { task: "Hello world 2", status: 1, days: [1, 1, 1, 2, 2, 0, 0] },
@@ -54,7 +54,7 @@ const reducer = (state = defaultState, action) => {
     case "change_week":
       console.log(action.payload.week)
       return {
-        ...state, tasks: action.payload.tasks, mon_date: action.payload.mon_date, tracker_order: action.payload.week.tracker_order,
+        ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, tracker_order: action.payload.week.tracker_order,
         list_order: action.payload.week.list_order,
       }
     case "change_display":
@@ -98,7 +98,7 @@ const reducer = (state = defaultState, action) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          date: state.mon_date.slice(0, 10),
+          date: state.mondayDate.slice(0, 10),
           tracker_order: action.payload.new_tracker_order
         }),
       })
@@ -111,7 +111,7 @@ const reducer = (state = defaultState, action) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          date: state.mon_date.slice(0, 10),
+          date: state.mondayDate.slice(0, 10),
           list_order: action.payload.newListOrder
         }),
       })

@@ -14,7 +14,7 @@ function List() {
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const list_order = useSelector(state => state.list_order)
-    const mon_date = useSelector(state => state.mon_date)
+    const mondayDate = useSelector(state => state.mondayDate)
     const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
     const blankDivRef = useRef()
@@ -32,7 +32,7 @@ function List() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        date: mon_date.slice(0, 10),
+                        date: mondayDate.slice(0, 10),
                         task: e.target.value,
                         column: index
                     }),
