@@ -106,8 +106,8 @@ function List() {
                                 e.preventDefault()
                                 e.stopPropagation()
                                 const key = Number(e.dataTransfer.getData("key"))
-                                const new_list_order = JSON.parse(JSON.stringify(list_order))
-                                const updated_list_order = new_list_order.map((subArray) => {
+                                const newListOrder = JSON.parse(JSON.stringify(list_order))
+                                const updated_list_order = newListOrder.map((subArray) => {
                                     return subArray.filter((element) => {
                                         if (Array.isArray(element)) {
                                             return !element.includes(key);
@@ -116,7 +116,7 @@ function List() {
                                     });
                                 });
                                 updated_list_order[index].push(key)
-                                dispatch({ type: "change_list_order", payload: { new_list_order: updated_list_order } })
+                                dispatch({ type: "change_list_order", payload: { newListOrder: updated_list_order } })
 
                             }}
                             key={shortid.generate()} ref={listsRef} className='list__ul'>
@@ -152,12 +152,12 @@ function List() {
                         e.preventDefault()
                         e.stopPropagation()
                         blankDivRef.current.style.display = "none";
-                        const new_list_order = JSON.parse(JSON.stringify(list_order))
+                        const newListOrder = JSON.parse(JSON.stringify(list_order))
                         const b = new Array()
                         const key = Number(e.dataTransfer.getData("key"))
                         b.push(key)
-                        console.log(new_list_order)
-                        const updated_list_order = new_list_order.map((subArray) => {
+                        console.log(newListOrder)
+                        const updated_list_order = newListOrder.map((subArray) => {
                             return subArray.filter((element) => {
                                 if (Array.isArray(element)) {
                                     return !element.includes(key);
@@ -167,7 +167,7 @@ function List() {
                         });
                         updated_list_order.push(b)
                         console.log(updated_list_order)
-                        dispatch({ type: "change_list_order", payload: { new_list_order: updated_list_order } })
+                        dispatch({ type: "change_list_order", payload: { newListOrder: updated_list_order } })
                     }}
                     className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>
                     <div className="list__add">

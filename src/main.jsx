@@ -47,7 +47,7 @@ defaultState = tasks && week && {
 
 const reducer = (state = defaultState, action) => {
   const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
-  const temp_list_order = JSON.parse(JSON.stringify(state.list_order))
+  const tempListOrder = JSON.parse(JSON.stringify(state.list_order))
   switch (action.type) {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
@@ -88,9 +88,9 @@ const reducer = (state = defaultState, action) => {
     case "create_task":
       const new_task = { task: action.payload.value, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
       temp_tasks[action.payload.id] = JSON.parse(JSON.stringify(new_task))
-      console.log(temp_list_order[action.payload.column], action.payload.column)
-      temp_list_order[action.payload.column].push(action.payload.id)
-      return { ...state, list_order: temp_list_order, tasks: temp_tasks }
+      console.log(tempListOrder[action.payload.column], action.payload.column)
+      tempListOrder[action.payload.column].push(action.payload.id)
+      return { ...state, list_order: tempListOrder, tasks: temp_tasks }
     case "change_tracker_order":
       fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",
@@ -112,11 +112,11 @@ const reducer = (state = defaultState, action) => {
         },
         body: JSON.stringify({
           date: state.mon_date.slice(0, 10),
-          list_order: action.payload.new_list_order
+          list_order: action.payload.newListOrder
         }),
       })
-      const new_list_order = JSON.parse(JSON.stringify(action.payload.new_list_order))
-      return { ...state, list_order: new_list_order }
+      const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
+      return { ...state, list_order: newListOrder }
     case "add_to_tr":
       if (state.tracker_order.indexOf(action.payload.task) == -1) {
         const a = [...state.tracker_order]
