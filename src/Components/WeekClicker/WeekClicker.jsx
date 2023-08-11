@@ -16,7 +16,6 @@ export default function WeekClicker() {
                 <ChevronLeft onClick={() => {
                     const fetchWeekTasks = () => {
                         return async (dispatch) => {
-                            console.log("test")
 
                             const newMondayDate = new Date(mondayDate.getTime() - 7 * MS_IN_DAY);
                             const newMondayDateF = newMondayDate.toISOString()
@@ -41,7 +40,6 @@ export default function WeekClicker() {
                 <ChevronRight onClick={() => {
                     const fetchWeekTasks = () => {
                         return async (dispatch) => {
-                            console.log("test")
 
                             const newMondayDate = new Date(mondayDate.getTime() + 7 * MS_IN_DAY);
                             const newMondayDateF = newMondayDate.toISOString()

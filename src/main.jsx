@@ -8,7 +8,6 @@ import thunkMiddleware from 'redux-thunk';
 const backendWork = false
 const today = new Date();
 const dayOfWeek = today.getDay();
-console.log(dayOfWeek)
 const MS_IN_DAY = 60 * 60 * 24 * 1000
 const test = [6, 0, 1, 2, 3, 4, 5]
 const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
@@ -52,7 +51,6 @@ const reducer = (state = defaultState, action) => {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
     case "change_week":
-      console.log(action.payload.week)
       return {
         ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, trackerOrder: action.payload.week.trackerOrder,
         listOrder: action.payload.week.list_order,
@@ -82,13 +80,11 @@ const reducer = (state = defaultState, action) => {
           status: (temp_tasks[action.payload.task].status + 1) % 3
         }),
       })
-      console.log(action.payload.task)
       temp_tasks[action.payload.task].status = (temp_tasks[action.payload.task].status + 1) % 3
       return { ...state, tasks: temp_tasks }
     case "create_task":
       const new_task = { task: action.payload.value, status: 0, days: [0, 0, 0, 0, 0, 0, 0] }
       temp_tasks[action.payload.id] = JSON.parse(JSON.stringify(new_task))
-      console.log(tempListOrder[action.payload.column], action.payload.column)
       tempListOrder[action.payload.column].push(action.payload.id)
       return { ...state, listOrder: tempListOrder, tasks: temp_tasks }
     case "change_tracker_order":

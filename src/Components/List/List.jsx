@@ -24,7 +24,6 @@ function List() {
     <FiX className="icon" size={15}></FiX>]
     function createTask(e, index) {
         const createTaskFetch = () => {
-            console.log(backendUrl)
             return async (dispatch) => {
                 const responseTask = await fetch(`${backendUrl}/create_task`, {
                     method: "POST",
@@ -99,7 +98,6 @@ function List() {
             <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
                 {tasks && listOrder && listOrder.map((v, index) => {
-                    console.log(v)
                     return (
                         <ul
                             onDrop={(e) => {
@@ -156,7 +154,6 @@ function List() {
                         const b = new Array()
                         const key = Number(e.dataTransfer.getData("key"))
                         b.push(key)
-                        console.log(newListOrder)
                         const updatedListOrder = newListOrder.map((subArray) => {
                             return subArray.filter((element) => {
                                 if (Array.isArray(element)) {
@@ -166,7 +163,6 @@ function List() {
                             });
                         });§
                         updatedListOrder.push(b)
-                        console.log(updatedListOrder)
                         dispatch({ type: "change_list_order", payload: { newListOrder: updatedListOrder } })
                     }}
                     className="list__blank" style={{ height: height + "px", width: width + "px" }} id="blankList" ref={blankDivRef}>

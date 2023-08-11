@@ -65,7 +65,6 @@ function Tracker({ dragingTask, setDragingTask }) {
             }
         }
         function dragOverHandler(e, index) {
-            console.log(dragingTask)
             e.preventDefault();
             let div;
             if (e.target.parentElement.nodeName === "SECTION") {
