@@ -4,24 +4,23 @@ import App from './App.jsx'
 import './index.css'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { dateF, dateSlice } from './utils/DateFunctions.js';
 import thunkMiddleware from 'redux-thunk';
 const backendWork = false
 const today = new Date();
 const dayOfWeek = today.getDay();
 const MS_IN_DAY = 60 * 60 * 24 * 1000
 const test = [6, 0, 1, 2, 3, 4, 5]
-const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 const mondayDate = new Date(today.getTime() - test[dayOfWeek] * MS_IN_DAY);
-const mondayDateF = mondayDate.toISOString()
 const backendUrl = backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005"
 let defaultState;
-var response = await fetch(`${backendUrl}/get_week_tasks/${mondayDateF.slice(0, 10)}`);
+var response = await fetch(`${backendUrl}/get_week_tasks/${dateSlice(mondayDate)}`);
 const tasks = await response.json();
-var response = await fetch(`${backendUrl}/get_week/${mondayDateF.slice(0, 10)}`);
+var response = await fetch(`${backendUrl}/get_week/${dateSlice(mondayDate)}}`);
 const week = await response.json();
 
 defaultState = tasks && week && {
-  mondayDate: mondayDateF,
+  mondayDate: dateF(mondayDate),
   tasks: tasks,
   trackerOrder: week.tracker_order,
   listOrder: week.list_order,

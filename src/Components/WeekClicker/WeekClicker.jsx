@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './WeekClicker.css'
+import { dateF, dateSlice } from '../../utils/DateFunctions'
 import { MONTHS } from './MONTHS'
 import { ChevronLeft, ChevronRight } from 'react-feather'
 export default function WeekClicker() {
@@ -18,15 +19,14 @@ export default function WeekClicker() {
                         return async (dispatch) => {
 
                             const newMondayDate = new Date(mondayDate.getTime() - 7 * MS_IN_DAY);
-                            const newMondayDateF = newMondayDate.toISOString()
 
-                            const responseTasks = await fetch(`${backendUrl}/get_week_tasks/${newMondayDateF.slice(0, 10)}`);
+                            const responseTasks = await fetch(`${backendUrl}/get_week_tasks/${dateSlice(newMondayDate)}`);
                             const tasks = await responseTasks.json();
 
-                            const responseWeek = await fetch(`${backendUrl}//get_week/${newMondayDateF.slice(0, 10)}`);
+                            const responseWeek = await fetch(`${backendUrl}//get_week/${dateSlice(newMondayDate)}`);
                             const week = await responseWeek.json();
 
-                            dispatch({ type: "change_week", payload: { mondayDate: newMondayDateF, week: week, tasks: tasks } });
+                            dispatch({ type: "change_week", payload: { mondayDate: dateF(newMondayDate), week: week, tasks: tasks } });
                         };
                     };
 

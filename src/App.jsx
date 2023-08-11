@@ -14,10 +14,8 @@ function App() {
 
     const key = Number(e.dataTransfer.getData("key"))
     const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
-    console.log(newTrackerOrder)
     const ind = newTrackerOrder.indexOf(key)
     newTrackerOrder.splice(ind, 1)
-    console.log(newTrackerOrder)
     dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
   }
   return (
