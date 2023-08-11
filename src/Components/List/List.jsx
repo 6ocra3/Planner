@@ -13,7 +13,7 @@ function List() {
     const [width, setWidth] = useState(0)
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
-    const listOrder = useSelector(state => state.list_order)
+    const listOrder = useSelector(state => state.listOrder)
     const mondayDate = useSelector(state => state.mondayDate)
     const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()

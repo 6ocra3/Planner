@@ -25,7 +25,7 @@ defaultState = tasks && week && {
   mondayDate: mondayDateF,
   tasks: tasks,
   trackerOrder: week.tracker_order,
-  list_order: week.list_order,
+  listOrder: week.list_order,
   drag_task: undefined,
   backendUrl: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
 }
@@ -41,13 +41,13 @@ defaultState = tasks && week && {
 //       6: { task: "Hello world 6", status: 0, days: [0, 0, 0, 0, 1, 2, 1] }
 //     },
 //     trackerOrder: [3, 1, 4, 6, 2],
-//     list_order: [[1, 3, 5], [2, 4, 6]]
+//     listOrder: [[1, 3, 5], [2, 4, 6]]
 //   }
 // }
 
 const reducer = (state = defaultState, action) => {
   const temp_tasks = JSON.parse(JSON.stringify(state.tasks))
-  const tempListOrder = JSON.parse(JSON.stringify(state.list_order))
+  const tempListOrder = JSON.parse(JSON.stringify(state.listOrder))
   switch (action.type) {
     case "drag_start":
       return { ...state, drag_task: action.payload.key }
@@ -55,7 +55,7 @@ const reducer = (state = defaultState, action) => {
       console.log(action.payload.week)
       return {
         ...state, tasks: action.payload.tasks, mondayDate: action.payload.mondayDate, trackerOrder: action.payload.week.trackerOrder,
-        list_order: action.payload.week.list_order,
+        listOrder: action.payload.week.list_order,
       }
     case "change_display":
       fetch(`${state.backendUrl}/edit_task_day`, {
@@ -90,7 +90,7 @@ const reducer = (state = defaultState, action) => {
       temp_tasks[action.payload.id] = JSON.parse(JSON.stringify(new_task))
       console.log(tempListOrder[action.payload.column], action.payload.column)
       tempListOrder[action.payload.column].push(action.payload.id)
-      return { ...state, list_order: tempListOrder, tasks: temp_tasks }
+      return { ...state, listOrder: tempListOrder, tasks: temp_tasks }
     case "change_tracker_order":
       fetch(`${state.backendUrl}/edit_week`, {
         method: "PUT",
@@ -116,7 +116,7 @@ const reducer = (state = defaultState, action) => {
         }),
       })
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
-      return { ...state, list_order: newListOrder }
+      return { ...state, listOrder: newListOrder }
     case "add_to_tr":
       if (state.trackerOrder.indexOf(action.payload.task) == -1) {
         const a = [...state.trackerOrder]
