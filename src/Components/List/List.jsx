@@ -13,7 +13,7 @@ function List() {
     const [width, setWidth] = useState(0)
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
-    const list_order = useSelector(state => state.list_order)
+    const listOrder = useSelector(state => state.list_order)
     const mondayDate = useSelector(state => state.mondayDate)
     const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
@@ -98,7 +98,7 @@ function List() {
             className="list">
             <h2 className="list__header">Сделать за неделю</h2>
             <div className="list__content" ref={listsRef}>
-                {tasks && list_order && list_order.map((v, index) => {
+                {tasks && listOrder && listOrder.map((v, index) => {
                     console.log(v)
                     return (
                         <ul
@@ -106,7 +106,7 @@ function List() {
                                 e.preventDefault()
                                 e.stopPropagation()
                                 const key = Number(e.dataTransfer.getData("key"))
-                                const newListOrder = JSON.parse(JSON.stringify(list_order))
+                                const newListOrder = JSON.parse(JSON.stringify(listOrder))
                                 const updated_list_order = newListOrder.map((subArray) => {
                                     return subArray.filter((element) => {
                                         if (Array.isArray(element)) {
@@ -152,7 +152,7 @@ function List() {
                         e.preventDefault()
                         e.stopPropagation()
                         blankDivRef.current.style.display = "none";
-                        const newListOrder = JSON.parse(JSON.stringify(list_order))
+                        const newListOrder = JSON.parse(JSON.stringify(listOrder))
                         const b = new Array()
                         const key = Number(e.dataTransfer.getData("key"))
                         b.push(key)
@@ -164,7 +164,7 @@ function List() {
                                 }
                                 return element !== key;
                             });
-                        });
+                        });§
                         updated_list_order.push(b)
                         console.log(updated_list_order)
                         dispatch({ type: "change_list_order", payload: { newListOrder: updated_list_order } })
