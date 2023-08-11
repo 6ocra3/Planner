@@ -93,23 +93,6 @@ const reducer = (state = defaultState, action) => {
       fetchChangeListOrder(body)
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
       return { ...state, listOrder: newListOrder }
-    case "add_to_tr":
-      if (state.trackerOrder.indexOf(action.payload.task) == -1) {
-        const a = [...state.trackerOrder]
-        a.push(action.payload.task)
-        fetch(`${state.backendUrl}/edit_week`, {
-          method: "PUT",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            date: "2022-07-03",
-            tracker_order: a,
-          }),
-        })
-        return { ...state, trackerOrder: a }
-      }
-      return state
     default:
       return state
   }

@@ -14,6 +14,7 @@ function List() {
     const [inp, setInp] = useState(-1)
     const tasks = useSelector(state => state.tasks)
     const listOrder = useSelector(state => state.listOrder)
+    const trackerOrder = useSelector(state => state.trackerOrder)
     const mondayDate = useSelector(state => state.mondayDate)
     const backendUrl = useSelector(state => state.backendUrl)
     const listsRef = useRef()
@@ -62,7 +63,14 @@ function List() {
             return (<li key={key}>
                 <div className="list__point">
                     <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: key } }) }}>{icons[tasks[key].status]} </div>
-                    <p className={tasks[key].status != 0 ? "list__point_text task_finished" : "list__point_text "} onClick={() => { dispatch({ type: "add_to_tr", payload: { task: key } }) }}
+                    <p className={tasks[key].status != 0 ? "list__point_text task_finished" : "list__point_text "}
+                        onClick={() => {
+                            if (trackerOrder.indexOf(key) == -1) {
+                                const newTrackerOrder = JSON.parse(JSON.stringify(trackerOrder))
+                                newTrackerOrder.push(key)
+                                dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
+                            }
+                        }}
                         onDragStart={(e) => startHandler(e, key)}
                         onDragLeave={(e) => dragEndHandler(e)}
                         onDragEnd={(e) => dragEndHandler(e)}
