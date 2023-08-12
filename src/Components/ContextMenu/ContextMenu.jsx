@@ -2,15 +2,15 @@ import React from 'react'
 import "./ContextMenu.css"
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchContextEdit } from '../../utils/requests';
+import { fetchContextEditDescription, fetchContextEditTask } from '../../utils/requests';
+
 export default function ContextMenu({ keyId }) {
-    const [textareaValue, setTextareaValue] = useState('');
+
     function handleKeyDown(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
     }
-
     const handleChange = (event) => {
         setTextareaValue(event.target.value);
         event.target.style.height = 'auto';
@@ -19,6 +19,8 @@ export default function ContextMenu({ keyId }) {
 
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
+    const [textareaValue, setTextareaValue] = useState(tasks[keyId].description);
+    console.log(tasks[keyId])
     return (
         <section className='context'>
             <h3 onBlur={(e) => {
@@ -27,7 +29,7 @@ export default function ContextMenu({ keyId }) {
                     "task_id": keyId,
                     "task_text": e.target.childNodes[0].nodeValue
                 }
-                fetchContextEdit(body, dispatch)
+                fetchContextEditTask(body, dispatch)
             }}
                 onKeyDown={handleKeyDown} suppressContentEditableWarning={true}
                 contentEditable={true} className='context__task'>
@@ -35,6 +37,14 @@ export default function ContextMenu({ keyId }) {
             </h3>
             <textarea className='context__description' placeholder='Ваше описание' value={textareaValue}
                 onInput={handleChange}
+                onBlur={(e) => {
+                    console.log(1234567)
+                    const body = {
+                        "task_id": keyId,
+                        "description": e.target.childNodes[0].nodeValue
+                    }
+                    fetchContextEditDescription(body, dispatch)
+                }}
             ></textarea>
         </section>
     )

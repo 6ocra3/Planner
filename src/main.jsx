@@ -88,6 +88,9 @@ const reducer = (state = defaultState, action) => {
     case "edit_task_task":
       temp_tasks[action.payload.keyId].task = action.payload.task
       return { ...state, tasks: temp_tasks }
+    case "edit_task_description":
+      temp_tasks[action.payload.keyId].description = action.payload.description
+      return { ...state, tasks: temp_tasks }
     case "change_list_order":
       var body = {
         date: state.mondayDate.slice(0, 10),

@@ -90,7 +90,7 @@ export function fetchCreateTask(mondayDate, e, index) {
     };
 }
 
-export function fetchContextEdit(body, dispatch) {
+export function fetchContextEditTask(body, dispatch) {
     console.log(body)
     fetch(`${backendUrl}/edit_task`, {
         method: "PUT",
@@ -101,4 +101,15 @@ export function fetchContextEdit(body, dispatch) {
     })
     dispatch({ type: "edit_task_task", payload: { keyId: body["task_id"], task: body["task_text"] } })
     console.log(1)
+}
+
+export function fetchContextEditDescription(body, dispatch) {
+    fetch(`${backendUrl}/edit_task`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    })
+    dispatch({ type: "edit_task_description", payload: { keyId: body["task_id"], description: body["description"] } })
 }
