@@ -85,13 +85,15 @@ const reducer = (state = defaultState, action) => {
       fetchChangeTrackerOrder(body)
       const newTrackerOrder = JSON.parse(JSON.stringify(action.payload.newTrackerOrder))
       return { ...state, trackerOrder: newTrackerOrder }
+    case "edit_task_task":
+      temp_tasks[action.payload.keyId].task = action.payload.task
+      return { ...state, tasks: temp_tasks }
     case "change_list_order":
       var body = {
         date: state.mondayDate.slice(0, 10),
         list_order: action.payload.newListOrder
       }
       fetchChangeListOrder(body)
-
       const newListOrder = JSON.parse(JSON.stringify(action.payload.newListOrder))
       return { ...state, listOrder: newListOrder }
     default:

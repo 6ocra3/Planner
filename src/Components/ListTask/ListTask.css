@@ -1,0 +1,31 @@
+.list__point {
+    text-align: left;
+    font-size: 13px;
+    line-height: 20px;
+    display: flex;
+    position: relative;
+}
+
+
+.task_finished {
+    text-decoration: line-through;
+    color: #4f5b66;
+}
+
+
+.list__point_square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 4px auto 4px;
+    box-sizing: border-box;
+    width: 15px;
+    height: 15px;
+    border: solid 1px #343d46;
+}
+
+
+.list__point_text {
+    width: 120px;
+    border: none;
+}

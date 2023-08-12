@@ -1,7 +1,34 @@
 .context {
     position: absolute;
-    width: 160px;
-    height: 90px;
-    background-color: white;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.01);
+    top: 20px;
+    z-index: 15;
+    width: 320px;
+    height: fit-content;
+    background-color: #c0c5ce;
+    box-sizing: border-box;
+    border: solid 1px #343d46;
+    padding: 20px;
+    box-shadow: 5px 5px 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+.context__task {
+    margin-bottom: 10px;
+}
+
+[contenteditable="true"]:focus {
+    border: none;
+    outline: none;
+}
+
+.context__description {
+    resize: none;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: #c0c5ce;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: #343d46;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
 }

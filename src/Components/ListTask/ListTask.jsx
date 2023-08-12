@@ -3,6 +3,7 @@ import { dragStartListTask } from '../../utils/dragFunctions'
 import { FiCheck } from "react-icons/fi";
 import { FiX } from "react-icons/fi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import "./ListTask.css"
 import ContextMenu from '../ContextMenu/ContextMenu';
 function ListTask({ keyId }) {
     const dispatch = useDispatch()
@@ -29,7 +30,7 @@ function ListTask({ keyId }) {
                     onDragStart={(e) => dragStartListTask(e, keyId)}
                     draggable
                 >{tasks[keyId].task.length > 20 ? tasks[keyId].task.slice(0, 18) + "..." : tasks[keyId].task}</p>
-                {keyId == 4 && <ContextMenu />}
+                {keyId == 4 && <ContextMenu keyId={keyId} />}
             </div>
         </li>)
     }

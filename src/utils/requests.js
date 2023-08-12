@@ -89,3 +89,16 @@ export function fetchCreateTask(mondayDate, e, index) {
         dispatch({ type: "create_task", payload: { id: task.id, column: index, value: e.target.value } })
     };
 }
+
+export function fetchContextEdit(body, dispatch) {
+    console.log(body)
+    fetch(`${backendUrl}/edit_task`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    })
+    dispatch({ type: "edit_task_task", payload: { keyId: body["task_id"], task: body["task_text"] } })
+    console.log(1)
+}
