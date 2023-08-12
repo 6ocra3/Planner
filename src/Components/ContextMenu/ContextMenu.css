@@ -1,0 +1,7 @@
+.context {
+    position: absolute;
+    width: 160px;
+    height: 90px;
+    background-color: white;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.01);
+}
