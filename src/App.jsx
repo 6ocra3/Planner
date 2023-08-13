@@ -11,6 +11,7 @@ function App() {
   const trackerOrder = useSelector(state => state.trackerOrder)
   return (
     <div
+      onClick={(e) => dispatch({ type: "change_info_task", payload: { infoTask: undefined } })}
       onDragOver={(e) => { e.preventDefault(); }}
       onDrop={(e) => dragDropApp(e, trackerOrder, dispatch)}
       style={{ height: "100vh", width: "100vw", display: "flex", justifyContent: "center", alignItems: "center" }}>

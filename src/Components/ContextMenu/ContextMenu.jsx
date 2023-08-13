@@ -22,7 +22,9 @@ export default function ContextMenu({ keyId }) {
     const [textareaValue, setTextareaValue] = useState(tasks[keyId].description);
     console.log(tasks[keyId])
     return (
-        <section className='context'>
+        <section
+            onClick={(e) => { e.stopPropagation() }}
+            className='context'>
             <h3 onBlur={(e) => {
                 console.log(e.target.childNodes[0])
                 const body = {

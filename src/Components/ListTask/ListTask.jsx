@@ -8,6 +8,7 @@ import ContextMenu from '../ContextMenu/ContextMenu';
 function ListTask({ keyId }) {
     const dispatch = useDispatch()
     const tasks = useSelector(state => state.tasks)
+    const infoTask = useSelector(state => state.infoTask)
     const trackerOrder = useSelector(state => state.trackerOrder)
     console.log(keyId)
     const icons = [<></>,
@@ -18,7 +19,11 @@ function ListTask({ keyId }) {
             <div className="list__point">
                 <div className="list__point_square" onClick={() => { dispatch({ type: "change_status", payload: { task: keyId } }) }}>{icons[tasks[keyId].status]} </div>
                 <p className={tasks[keyId].status != 0 ? "list__point_text task_finished" : "list__point_text "}
-                    onClick={(e) => { e.target.parentElement.classList.toggle("list__point_context") }}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        infoTask == keyId ? dispatch({ type: "change_info_task", payload: { "infoTask": undefined } }) : dispatch({ type: "change_info_task", payload: { "infoTask": keyId } })
+
+                    }}
                     onDoubleClick={(e) => {
                         console.log(e.detail)
                         if (trackerOrder.indexOf(keyId) == -1) {
@@ -27,10 +32,10 @@ function ListTask({ keyId }) {
                             dispatch({ type: "change_tracker_order", payload: { newTrackerOrder: newTrackerOrder } })
                         }
                     }}
-                    onDragStart={(e) => dragStartListTask(e, keyId)}
+                    onDragStart={(e) => dragStartListTask(e, keyId, dispatch)}
                     draggable
                 >{tasks[keyId].task.length > 20 ? tasks[keyId].task.slice(0, 18) + "..." : tasks[keyId].task}</p>
-                {keyId == 4 && <ContextMenu keyId={keyId} />}
+                {keyId == infoTask && <ContextMenu keyId={keyId} />}
             </div>
         </li>)
     }

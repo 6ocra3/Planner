@@ -142,7 +142,8 @@ export function dragDropListUl(e, index, listOrder, dispatch) {
     dispatch({ type: "change_list_order", payload: { newListOrder: updatedListOrder } })
 }
 
-export function dragStartListTask(e, key) {
+export function dragStartListTask(e, key, dispatch) {
+    dispatch({ type: "change_info_task", payload: { "infoTask": undefined } })
     e.dataTransfer.setData("key", key)
 }
 

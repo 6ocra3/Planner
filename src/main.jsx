@@ -25,7 +25,7 @@ defaultState = tasks && week && {
   tasks: tasks,
   trackerOrder: week.tracker_order,
   listOrder: week.list_order,
-  drag_task: undefined,
+  infoTask: undefined,
   backendUrl: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
 }
 // else {
@@ -91,6 +91,8 @@ const reducer = (state = defaultState, action) => {
     case "edit_task_description":
       temp_tasks[action.payload.keyId].description = action.payload.description
       return { ...state, tasks: temp_tasks }
+    case "change_info_task":
+      return { ...state, infoTask: action.payload.infoTask }
     case "change_list_order":
       var body = {
         date: state.mondayDate.slice(0, 10),
