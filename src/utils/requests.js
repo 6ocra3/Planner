@@ -113,3 +113,13 @@ export function fetchContextEditDescription(body, dispatch) {
     })
     dispatch({ type: "edit_task_description", payload: { keyId: body["task_id"], description: body["description"] } })
 }
+
+export function fetchDeleteTask(body) {
+    fetch(`${backendUrl}/delete_task`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    })
+}

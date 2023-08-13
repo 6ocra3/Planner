@@ -5,7 +5,7 @@ import './index.css'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { dateF, dateSlice } from './utils/DateFunctions.js';
-import { fetchChangeDayValue, fetchChangeListOrder, fetchChangeStatus, fetchChangeTrackerOrder } from './utils/requests.js';
+import { fetchChangeDayValue, fetchChangeListOrder, fetchChangeStatus, fetchChangeTrackerOrder, fetchDeleteTask } from './utils/requests.js';
 import thunkMiddleware from 'redux-thunk';
 const backendWork = false
 const today = new Date();
@@ -64,6 +64,13 @@ const reducer = (state = defaultState, action) => {
       fetchChangeDayValue(body)
       temp_tasks[action.payload.task].days[action.payload.day] = (temp_tasks[action.payload.task].days[action.payload.day] + 1) % 4
       return { ...state, tasks: temp_tasks }
+    case "delete_task":
+      var body = {
+        id: action.payload.keyId
+      };
+      fetchDeleteTask(body);
+      delete temp_tasks[action.payload.keyId];
+      return { ...state, tasks: temp_tasks };
     case "change_status":
       var body = {
         task_id: action.payload.task,
