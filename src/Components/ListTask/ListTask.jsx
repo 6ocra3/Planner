@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { dragStartListTask } from '../../utils/dragFunctions'
 import { FiCheck } from "react-icons/fi";
 import { FiX } from "react-icons/fi";
-import { FaRegTrashAlt } from "react-icons/fa";
 import "./ListTask.css"
 import ContextMenu from '../ContextMenu/ContextMenu';
 function ListTask({ keyId }) {
@@ -34,7 +33,7 @@ function ListTask({ keyId }) {
                     }}
                     onDragStart={(e) => dragStartListTask(e, keyId, dispatch)}
                     draggable
-                >{tasks[keyId].task.length > 20 ? tasks[keyId].task.slice(0, 18) + "..." : tasks[keyId].task}</p>
+                >{tasks[keyId].task?.length > 20 ? tasks[keyId].task.slice(0, 18) + "..." : tasks[keyId].task}</p>
                 {keyId == infoTask && <ContextMenu keyId={keyId} />}
             </div>
         </li>)
