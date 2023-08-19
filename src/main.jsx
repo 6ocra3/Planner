@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { dateF, dateSlice } from './utils/DateFunctions.js';
 import { fetchChangeDayValue, fetchChangeListOrder, fetchChangeStatus, fetchChangeTrackerOrder, fetchDeleteTask } from './utils/requests.js';
 import thunkMiddleware from 'redux-thunk';
-const backendWork = false
+const backendWork = true
 const today = new Date();
 const dayOfWeek = today.getDay();
 const MS_IN_DAY = 60 * 60 * 24 * 1000
