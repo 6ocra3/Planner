@@ -1,5 +1,7 @@
-const backendWork = true
+const backendWork = false;
 const config = {
-    backendUrl: backendWork ? "https://6ocra3.pythonanywhere.com" : "http://127.0.0.1:5005",
+  backendUrl: backendWork
+    ? "https://6ocra3.pythonanywhere.com"
+    : "http://127.0.0.1:5005"
 };
 export default config;

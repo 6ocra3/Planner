@@ -1,16 +1,22 @@
- .body {
-   width: 70%;
-   margin: 0 auto;
-   text-align: center;
- }
+.body {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
 
- .App {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   grid-template-rows: 15px 1fr;
-   row-gap: 20px;
-   column-gap: 20px;
-   height: 90vh;
-   width: 60vw;
-   margin: 0 auto;
- }
+.Planner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 15px 1fr;
+  row-gap: 20px;
+  column-gap: 20px;
+  height: 90vh;
+  width: 60vw;
+  margin: 0 auto;
+}
+
+.DayTimeline {
+  height: 90vh;
+  width: 60vw;
+  margin: 0 auto;
+}

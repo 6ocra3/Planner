@@ -1,0 +1,11 @@
+.dt__hours {
+  margin: 0 auto;
+  width: fit-content;
+  border: 1px solid black;
+}
+.dt__hour {
+  padding: 8px 5px;
+  display: block;
+
+  width: 30px;
+}
