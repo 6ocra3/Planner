@@ -6,6 +6,28 @@
 .dt__hour {
   padding: 8px 5px;
   display: block;
-
+  font-weight: 600;
+  font-size: large;
+  height: 25px;
   width: 30px;
+}
+
+.dt__button {
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  padding: 5px 5px;
+}
+
+.dt__buttons {
+  width: 100%;
+  display: flex;
+  height: fit-content;
+}
+
+.dt__button:nth-child(1) {
+  margin-left: auto;
+}
+.dt__button:nth-child(2) {
+  margin-right: auto;
 }
