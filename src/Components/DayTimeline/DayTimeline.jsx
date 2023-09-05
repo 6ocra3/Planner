@@ -6,8 +6,8 @@ export default function DayTimeline() {
   return (
     <div className="dt">
       <div className="dt__buttons">
-        <FiPlus className="dt__button" />
-        <FiMinus className="dt__button" />
+        <FiPlus onClick={() => {setHours([hours[0] - 1, ...hours])}} className="dt__button" />
+        <FiMinus onClick={() => {setHours(hours.slice(1))}} className="dt__button" />
       </div>
       <div className="dt__hours">
         {hours.map((h) => {
@@ -19,8 +19,8 @@ export default function DayTimeline() {
         })}
       </div>
       <div className="dt__buttons">
-        <FiPlus className="dt__button" />
-        <FiMinus className="dt__button" />
+        <FiPlus onClick={() => {setHours([...hours, hours[hours.length - 1] + 1])}} className="dt__button" />
+        <FiMinus onClick={() => {setHours(hours.slice(0, -1))}} className="dt__button" />
       </div>
     </div>
   );
