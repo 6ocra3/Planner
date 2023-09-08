@@ -12,9 +12,9 @@ export default function DayTimeline() {
       <div className="dt__hours">
         {hours.map((h) => {
           return (
-            <p className="dt__hour" key={h}>
-              {h}
-            </p>
+            <div className="dt__hour-container top" key={h}>
+              <p className="dt__hour">{h}</p>
+            </div>
           );
         })}
       </div>
