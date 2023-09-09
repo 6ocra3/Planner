@@ -10,9 +10,9 @@ export default function DayTimeline() {
         <FiMinus onClick={() => {setHours(hours.slice(1))}} className="dt__button" />
       </div>
       <div className="dt__hours">
-        {hours.map((h) => {
+        {hours.map((h, index) => {
           const [borderPlace, setBorderPlace] = useState()
-          function mouseMoveHandler(e){
+          function mouseMoveHandler(e, index){
             let div = e.target
             if(e.target.nodeName != "DIV"){
               div = e.target.parentNode
@@ -22,22 +22,34 @@ export default function DayTimeline() {
             const { top, bottom } = div.getBoundingClientRect();
             const height = bottom - top;
             const position = clientY - top;
-            console.log(div)
-            if(position <= height / 4){
-              setBorderPlace("top")
+            console.log(position, height / 4 * 3)
+            if(position <= (height / 4)){
+              div.classList.remove("middle")
+              div.classList.remove("bottom")
+              if(index != 0 ){
+              div.classList.add("top")}
             }
-            else if (height / 4 < position <= height / 4 * 3){
-              setBorderPlace("middle")
+            else if (position >= (height / 4 * 3)){
+              div.classList.remove("middle")
+              if(index != hours.length - 1){
+              div.classList.add("bottom")}
+              div.classList.remove("top")
+
             }
             else{
-              setBorderPlace("bottom")
+              div.classList.add("middle")
+              div.classList.remove("bottom")
+              div.classList.remove("top")
             }
         
           }
 
 
           return (
-            <div onMouseMove={mouseMoveHandler} className={["dt__hour-container", borderPlace].join(" ")} key={h}>
+            <div onMouseLeave={(e) => {e.target.classList.remove("top"); 
+            e.target.classList.remove("bottom"); 
+            e.target.classList.remove("middle")}} 
+            onMouseMove={(e) => mouseMoveHandler(e, index)} className={["dt__hour-container"].join(" ")} key={h}>
               <p className="dt__hour">{h}</p>
             </div>
           );
