@@ -17,12 +17,36 @@
   display: block;
   position: absolute;
   z-index: 10;
-  top: 0;
   left: 0;
   content: "";
   width: 100%;
   height: 2px;
   background-color: black;
+  top: 0%;
+}
+
+.dt__hour-container.middle::after{
+  display: block;
+    position: absolute;
+  z-index: 10;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  top: 50%;
+}
+
+.dt__hour-container.bottom::after{
+  display: block;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  top: 0%;
 }
 
 .dt__hour {

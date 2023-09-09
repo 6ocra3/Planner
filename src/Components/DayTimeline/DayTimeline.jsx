@@ -11,8 +11,33 @@ export default function DayTimeline() {
       </div>
       <div className="dt__hours">
         {hours.map((h) => {
+          const [borderPlace, setBorderPlace] = useState()
+          function mouseMoveHandler(e){
+            let div = e.target
+            if(e.target.nodeName != "DIV"){
+              div = e.target.parentNode
+            }
+            const { clientY } = e;
+        
+            const { top, bottom } = div.getBoundingClientRect();
+            const height = bottom - top;
+            const position = clientY - top;
+            console.log(div)
+            if(position <= height / 4){
+              setBorderPlace("top")
+            }
+            else if (height / 4 < position <= height / 4 * 3){
+              setBorderPlace("middle")
+            }
+            else{
+              setBorderPlace("bottom")
+            }
+        
+          }
+
+
           return (
-            <div className="dt__hour-container top" key={h}>
+            <div onMouseMove={mouseMoveHandler} className={["dt__hour-container", borderPlace].join(" ")} key={h}>
               <p className="dt__hour">{h}</p>
             </div>
           );
